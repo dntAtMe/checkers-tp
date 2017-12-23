@@ -8,23 +8,6 @@ import java.nio.ByteBuffer;
  // taka z dupy
 public class GameEventDefault implements GameEvent {
 
-    // C - client
-    // S - server
-
-    public static final int C_LOGIN = 1001;
-    public static final int S_LOGIN = 1004;
-    public static final int C_LOGOUT = 1005;
-    public static final int S_LOGOUT = 1006;
-    public static final int C_JOIN_GAME = 1101;
-    public static final int S_PLAYER_JOINED = 1104;
-    public static final int C_QUIT_GAME = 1105;
-    public static final int S_PLAYER_QUIT = 1106;
-    public static final int C_MOVE = 1301;
-    public static final int S_MOVE_ACK_OK = 1302;
-    public static final int S_MOVE_ACK_FAIL = 1303;
-    public static final int S_ROUND_COMPLETE = 1304;
-    public static final int S_GAME_OVER = 1305;
-
     protected int eventType;
     protected String playerId;
     protected String sessionId;
@@ -42,14 +25,6 @@ public class GameEventDefault implements GameEvent {
         this.eventType = type;
     }
 
-    public GameEventDefault(int type, String message){
-        this.eventType = type;
-        this.message = message;
-    }
-
-    public void setType(int type) {
-        eventType = type;
-    }
     public int getType() {
         return eventType;
     }
@@ -64,22 +39,12 @@ public class GameEventDefault implements GameEvent {
     public String getMessage() {
         return message;
     }
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getPlayerId() {
         return playerId;
     }
     public void setPlayerId(String id) {
         playerId = id;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-    public void setSessionId(String id) {
-        sessionId = id;
     }
 
     public String[] getRecipients() {

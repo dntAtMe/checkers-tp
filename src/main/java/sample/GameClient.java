@@ -33,18 +33,19 @@ public abstract class GameClient extends Thread{
             System.exit(1);
         }
         this.playerId = args[1];
-        System.out.println("Czy polaczony"+connect());
+        System.out.println("Czy polaczony ?  "+connect());
 
         if (!connect())
             System.exit(1);
 
         netReader = new NIOEventReader(this, channel, inQueue);
         netReader.start();
+        run();
 
     }
 
     public void run() {
-        login();
+
         threadSleep(200L);
 
         while(running) {
@@ -55,7 +56,6 @@ public abstract class GameClient extends Thread{
     }
     public abstract String getGameName();
     public abstract GameEvent createGameEvent();
-    public abstract GameEvent createLoginEvent();
     public abstract GameEvent createDisconnectEvent(String reason);
     protected abstract void processIncomingEvents();
 
@@ -92,12 +92,7 @@ public abstract class GameClient extends Thread{
         }
     }
 
-    protected void login() {
-        GameEvent e = createLoginEvent();
-        e.setGameName(getGameName());
-        e.setPlayerId(playerId);
-        writeEvent(e);
-    }
+
 
     protected void shutdown() {
         running = false;

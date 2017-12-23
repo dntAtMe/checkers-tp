@@ -4,13 +4,13 @@ package main.java.sample;
 
 import java.util.*;
 
-
 /**
  * tu cala gra sie odbywa
  */
 public abstract class GameController extends Wrap {
 
-    protected GameServer gameServer;
+    protected
+    GameServer gameServer;
 
     public final void init(GameServer s, GameConfig gc) {
         this.gameServer = s;
@@ -20,7 +20,7 @@ public abstract class GameController extends Wrap {
     }
 
     protected void sendEvent(GameEvent e, Player p) {
-        e.setPlayerId(p.getPlayerId());
+       // e.setPlayerId(p.getPlayerId());
         gameServer.writeEvent(e);
     }
     protected synchronized void sendBroadcastEvent(GameEvent e, Collection players) {

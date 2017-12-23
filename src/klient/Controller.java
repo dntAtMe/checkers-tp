@@ -1,4 +1,4 @@
-package main.java.sample;
+package klient;
 
 public class Controller {
     Board board;

@@ -34,8 +34,12 @@ public class GameServer {
 
     public GameServer() {
         gameControllers = new Hashtable();
+        System.out.println("po");
         playersByPlayerId = new Hashtable();
+        System.out.println("po");
+
         playersBySessionId = new Hashtable();
+        System.out.println("po");
     }
 
     public void init() {
@@ -46,7 +50,6 @@ public class GameServer {
 
         selectAndRead = new SelectAndRead(this);
         selectAndRead.start();
-
         eventWriter = new EventWriter(this, Globals.EVENT_WRITER_WORKERS);
     }
 
@@ -61,7 +64,7 @@ public class GameServer {
             InetAddress addr = InetAddress.getLocalHost();
             log.info("binding to address: " + addr.getHostAddress());
             sSockChan.socket().bind(new InetSocketAddress(addr, Globals.PORT));
-
+            System.out.println("cos");
             // get a selector
             selector = Selector.open();
             System.out.println("selector otwarty");

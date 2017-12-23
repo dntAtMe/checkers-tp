@@ -11,14 +11,9 @@ public class ChineseClient extends GameClient {
             System.out.println(" <host> <player_name> \n");
             System.exit(0);
         }
-        System.out.println("Poczatek");
         ChineseClient gc = new ChineseClient();
-        System.out.println("Po utworzeniu klienta");
-        gc.init(args)
-        ;
-        System.out.println("Po inicie");
+        gc.init(args);
         gc.start();
-        System.out.println("Po starcie");
         log.info("Polaczono z serwerem");
 
     }
@@ -36,7 +31,6 @@ public class ChineseClient extends GameClient {
     protected void processIncomingEvents() {
         GameEvent inEvent;
         while (inQueue.size() > 0) {
-            System.out.println("jestem");
         }
     }
 
@@ -49,9 +43,7 @@ public class ChineseClient extends GameClient {
         return new GameEventDefault();
     }
 
-    public GameEvent createLoginEvent() {
-        return new GameEventDefault(GameEventDefault.C_LOGIN);
-    }
+
 
     public GameEvent createDisconnectEvent(String reason) {
         return null;

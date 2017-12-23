@@ -1,6 +1,7 @@
 package main.java.sample;
 
 public class Globals {
+    public static final int numberOfPlayers=3;
     public static final int PORT = 6789;
     public static final int NET_BUFFER_SIZE=512;
     public static final int MAX_EVENT_SIZE=5000;

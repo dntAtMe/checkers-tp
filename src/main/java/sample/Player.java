@@ -3,6 +3,7 @@ package main.java.sample;
 import java.nio.channels.SocketChannel;
 
 public interface Player {
+
     String getPlayerId();
     String getSessionId();
     SocketChannel getChannel();
