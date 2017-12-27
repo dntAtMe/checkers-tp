@@ -1,19 +1,18 @@
-package klient;
+package  klient;
 
 public class Controller {
     Board board;
+    Move move;
     int numberOfPlayer;
 
     public Controller(int i ){
         this.numberOfPlayer=i;
-        board=new Board();
-        board.buildBoard();
-
+        buildGame();
     }
 
     public void buildGame(){
-        board.buildBoard();
-
+        Board board = new Board();
+        Event event = new Event(board);
     }
 
     public void checkMove(Point point){

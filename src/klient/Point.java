@@ -1,4 +1,4 @@
-package klient;
+package  klient;
 public class Point {
     public final double x;
     public final double y;

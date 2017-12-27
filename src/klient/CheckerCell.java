@@ -1,4 +1,4 @@
-package klient;
+package  klient;
 import javafx.scene.paint.Color;
 
 public class CheckerCell {

@@ -1,4 +1,4 @@
-package klient;
+package  klient;
 
 import javafx.scene.control.Cell;
 

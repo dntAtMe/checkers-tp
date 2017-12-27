@@ -1,10 +1,8 @@
-package klient;
+package  klient;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-
-import java.util.ArrayList;
 
 public class Move {
 
@@ -16,9 +14,10 @@ public class Move {
     CheckerCell cell;
     CheckerCell destination;
     CheckerCell findedCell;
-    int r, q, s;
+    int r, q;
 
     public Move(Board board) {
+
         cell = new CheckerCell();
         destination = new CheckerCell();
         shapeCell = new Polygon();
