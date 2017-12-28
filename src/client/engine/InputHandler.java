@@ -1,8 +1,7 @@
-package klient.engine;
+package client.engine;
 
 import javafx.scene.input.MouseEvent;
-import klient.engine.Game;
-import klient.gui.Window;
+import client.gui.Window;
 
 public class InputHandler {
 

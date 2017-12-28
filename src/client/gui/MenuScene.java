@@ -1,4 +1,4 @@
-package klient.gui;
+package client.gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
-import klient.engine.InputHandler;
+import client.engine.InputHandler;
 
 public class MenuScene {
 

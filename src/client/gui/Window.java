@@ -1,10 +1,10 @@
-package klient.gui;
+package client.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import klient.engine.InputHandler;
+import client.engine.InputHandler;
 
 public class Window extends Application implements IWindow {
 

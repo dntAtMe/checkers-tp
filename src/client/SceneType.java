@@ -1,4 +1,4 @@
-package klient;
+package client;
 
 public enum SceneType {
   SCENE_TYPE_MENU,

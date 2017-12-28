@@ -1,4 +1,4 @@
-package klient.gui;
+package client.gui;
 
 import javafx.scene.Scene;
 

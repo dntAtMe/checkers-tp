@@ -1,4 +1,4 @@
-package klient.net;
+package client.net;
 
 import common.BoardType;
 import server.GameMessage;

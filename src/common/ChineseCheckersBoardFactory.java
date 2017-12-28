@@ -1,6 +1,6 @@
 package common;
 
-import klient.FileManager;
+import client.FileManager;
 
 import java.util.ArrayList;
 

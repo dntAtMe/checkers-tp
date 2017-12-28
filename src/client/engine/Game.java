@@ -1,9 +1,9 @@
-package klient.engine;
+package client.engine;
 
 import common.*;
-import klient.net.Client;
-import klient.gui.DrawEngine;
-import klient.gui.Window;
+import client.net.Client;
+import client.gui.DrawEngine;
+import client.gui.Window;
 
 public class Game {
 

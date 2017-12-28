@@ -1,4 +1,4 @@
-package klient.gui;
+package client.gui;
 
 import common.Cell;
 import common.PlayerTag;
@@ -6,8 +6,6 @@ import common.Point;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import klient.gui.GameScene;
-import klient.gui.Window;
 
 import java.util.HashMap;
 import java.util.Map;
