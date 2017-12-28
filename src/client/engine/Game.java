@@ -1,9 +1,12 @@
 package client.engine;
 
+import client.Move;
 import common.*;
 import client.net.Client;
 import client.gui.DrawEngine;
 import client.gui.Window;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 
 public class Game {
 
@@ -11,11 +14,16 @@ public class Game {
   private Client client;
   private Board board;
   private Cell selected = null;
+  private Cell change = null;
+  private Move move;
+  private Polygon polygons[][];
+  boolean canMove;
+
 
 
   public Game(Window window) {
     drawEngine = new DrawEngine(window);
-//    client = new Client("localhost");
+    client = new Client();
   }
 
   public void startNewGame(int numberOfPlayers) {
@@ -25,6 +33,8 @@ public class Game {
       board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
       drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
     }
+    move = new Move(board);
+
   }
 
   //TODO:
@@ -32,7 +42,31 @@ public class Game {
 
   }
 
-  //TODO:
+
+  public void onCellEntered(double x, double y){
+  /*
+    Point point = pixelToPoint(x, y);
+    int q = (int)point.getQ();
+    int r = (int)point.getR();
+
+    if(board.board[q][r]!=null)
+      drawEngine.selectCell(q,r);
+*/
+
+  }
+
+  public void onCellExited(double x, double y){
+
+    /*
+    Point point = pixelToPoint(x, y);
+    int a = (int)point.getQ();
+    int b = (int)point.getR();
+
+    if(board.board[a][b]!=null)
+      drawEngine.deselectCell(a,b);
+
+*/
+  }
   public void onCellSelected(double x, double y) {
      Point p = pixelToPoint(x, y);
      int q = (int)p.getQ();
@@ -44,16 +78,21 @@ public class Game {
         drawEngine.selectCell(q, r);
       }
      } else {
-       moveSelected(q, r);
+       change = board.board[q][r];
+       moveSelected(selected,change);
      }
     }
 
     //TODO:
-    public void moveSelected(int x, int y) {
-      boolean canMove = client.canMove(selected.getPoint(), new Point(x, y));
+    public void moveSelected(Cell from, Cell to) {
+           // if (canMove = client.canMove(from, to){
 
-      if(canMove) {
-        //TODO: MOVE
+      if (from.getOwner() != PlayerTag.NONE && to.getOwner().equals(PlayerTag.NONE)) {
+        if(move.canMove(from,to)){
+          System.out.println("<o");
+          drawEngine.onMove(from,to);
+          selected = null;
+        }
       }
     }
 

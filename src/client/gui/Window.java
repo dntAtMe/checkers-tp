@@ -25,9 +25,18 @@ public class Window extends Application implements IWindow {
     stage.show();
   }
 
+  public void onMouseEntered(MouseEvent en) {
+    inputHandler.onMouseEntered(en);
+  }
+
+  public void onMouseExited(MouseEvent ex) {
+    inputHandler.onMouseExited(ex);
+  }
+
   public void onMouseClicked(MouseEvent e) {
     inputHandler.onMouseClicked(e);
   }
+
 
   @Override
   public void setScene(Scene scene) {

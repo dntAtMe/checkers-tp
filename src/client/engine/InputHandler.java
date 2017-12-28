@@ -20,7 +20,16 @@ public class InputHandler {
   }
 
   public void onMouseClicked(MouseEvent e) {
+
     game.onCellSelected(e.getX(), e.getY());
+  }
+  public void onMouseEntered(MouseEvent en ){
+
+    game.onCellEntered(en.getX(), en.getY());
+  }
+  public void onMouseExited(MouseEvent ex) {
+
+    game.onCellExited(ex.getX(), ex.getY());
   }
 
 }

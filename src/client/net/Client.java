@@ -1,12 +1,13 @@
 package client.net;
 
-import common.BoardType;
+import common.*;
 import common.Point;
 import server.GameMessage;
 import server.GameMessageType;
 import server.messages.GameAnswerMessage;
 import server.messages.GameSetupMessage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,6 +24,9 @@ public class Client {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
+    public Client(){
+
+    }
     public Client(String serverAddress) {
       this.serverAddress = serverAddress;
 
@@ -43,8 +47,8 @@ public class Client {
       }
     }
 
-    //TODO:
-    public boolean canMove(Point from, Point to) {
+    public boolean canMove(Cell from, Cell to) {
+
 
       return false;
     }

@@ -31,6 +31,13 @@ public class DrawEngine {
     }
   }
 
+  public void onMove(Cell from, Cell to){
+    polygons[(int)to.getPoint().getQ()][(int)to.getPoint().getR()].setFill(playerColors.get(from.getOwner()));
+    polygons[(int)from.getPoint().getQ()][(int)from.getPoint().getR()].setFill(Color.WHITE);
+    to.setOwner(from.getOwner());
+    from.setOwner(PlayerTag.NONE);
+  }
+
   public void selectCell(int x, int y) {
     polygons[x][y].setStroke(Color.RED);
     polygons[x][y].setStrokeWidth(4);
@@ -55,6 +62,14 @@ public class DrawEngine {
       window.onMouseClicked(e);
     });
 
+    scene.scene.addEventFilter(MouseEvent.MOUSE_ENTERED, en -> {
+      window.onMouseEntered(en);
+    });
+
+    scene.scene.addEventFilter(MouseEvent.MOUSE_EXITED, ex -> {
+      window.onMouseExited(ex);
+    });
+
     window.setScene(scene.scene);
   }
 
@@ -62,7 +77,6 @@ public class DrawEngine {
     polygons = new Polygon[width][height];
     for (int x = 0; x < width; x++){
       for (int y = 0; y < height; y++) {
-        System.out.println("Doing (" + x + ", " + y + ")");
         if(board[x][y] == null)
           continue;
         Polygon poly = getDrawableShape(x, y);
