@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ChineseCheckersBoardFactory {
 
   public static Board createBoard(int numberOfPlayers) {
-    switch(numberOfPlayers) {
+    switch (numberOfPlayers) {
       case 2:
         return createTwoPlayersBoard();
       case 3:
@@ -30,7 +30,6 @@ public class ChineseCheckersBoardFactory {
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
-        System.out.println("Doing (" + x + ", " + y + ")");
         currentChar = lines[y].charAt(x);
         PlayerTag[] owners = PlayerTag.values();
 
@@ -51,15 +50,11 @@ public class ChineseCheckersBoardFactory {
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
-        System.out.println("Doing (" + x + ", " + y + ")");
-        if(board[x][y] == null)
+        if (board[x][y] == null)
           continue;
-        if(board[x][y].getOwner() != PlayerTag.PLAYER_1
+        if (board[x][y].getOwner() != PlayerTag.PLAYER_1
                 && board[x][y].getOwner() != PlayerTag.PLAYER_4) {
           board[x][y].setOwner(PlayerTag.NONE);
-          continue;
-        } else if (board[x][y].getOwner() == PlayerTag.PLAYER_4) {
-          board[x][y].setOwner(PlayerTag.PLAYER_2);
           continue;
         }
       }
@@ -68,19 +63,51 @@ public class ChineseCheckersBoardFactory {
     return new Board(board);
   }
 
-  //TODO: finish
   public static Board createThreePlayersBoard() {
-    return null;
+    Cell[][] board = createBoard();
+
+    for (int y = 0; y < Board.ROWS; y++) {
+      for (int x = 0; x < Board.COLUMNS; x++) {
+        if (board[x][y] == null)
+          continue;
+        if (board[x][y].getOwner() != PlayerTag.PLAYER_1
+                && board[x][y].getOwner() != PlayerTag.PLAYER_3 && board[x][y].getOwner() != PlayerTag.PLAYER_5) {
+          board[x][y].setOwner(PlayerTag.NONE);
+          continue;
+
+        }
+      }
+    }
+
+    return new Board(board);
   }
 
-  //TODO: finish
   public static Board createFourPlayersBoard() {
-    return null;
+    Cell[][] board = createBoard();
+
+    for (int y = 0; y < Board.ROWS; y++) {
+      for (int x = 0; x < Board.COLUMNS; x++) {
+        if (board[x][y] == null)
+          continue;
+        if (board[x][y].getOwner() != PlayerTag.PLAYER_2
+                && board[x][y].getOwner() != PlayerTag.PLAYER_3
+                && board[x][y].getOwner() != PlayerTag.PLAYER_5
+                && board[x][y].getOwner() != PlayerTag.PLAYER_6) {
+          board[x][y].setOwner(PlayerTag.NONE);
+          continue;
+
+        }
+      }
+    }
+
+    return new Board(board);
   }
 
-  //TODO: finish
   public static Board createSixPlayersBoard() {
-    return null;
-  }
+    Cell[][] board = createBoard();
 
+    return new Board(board);
+
+  }
 }
+

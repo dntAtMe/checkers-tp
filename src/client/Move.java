@@ -1,76 +1,57 @@
 package client;
 
+
+import common.Board;
+import common.PlayerTag;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import common.Cell;
 
 public class Move {
-
-    CheckerBoard checkerBoard;
-    Board board;
-    Color color;
-    Polygon shapeCell;
-    Polygon shapeDestination;
-    CheckerCell cell;
-    CheckerCell destination;
-    CheckerCell findedCell;
+  Board board;
+  Cell finded;
     int r, q;
 
-    public Move(Board board) {
 
-        cell = new CheckerCell();
-        destination = new CheckerCell();
-        shapeCell = new Polygon();
-        shapeDestination = new Polygon();
-        this.board = board;
+    public Move(Board board){
+        this.board=board;
+        finded= new Cell();
+
     }
+    public boolean canMove(Cell from, Cell to) {
 
+            if (cellsDistance(from, to) <= 4) {
+                if (((cellsDistance(from, to) == 4) && isBetween(from, to))){
+                    return true;
+                }
 
-    public boolean properMove(CheckerCell cell, Polygon shapeCell) {
-
-        if (cell.isfree == false) {
-            this.shapeCell = shapeCell;
-            this.cell = cell;
-            return true;
-        }
-
-        return false;
-    }
-
-    public void move(CheckerCell destination, Polygon shapeDestination) {
-
-        if (destination.isfree) {
-            this.destination = destination;
-            this.shapeDestination = shapeDestination;
-
-            if (cellsDistance(cell, destination) <= 4) {
-                if (((cellsDistance(cell, destination) == 4) && isBetween(cell, destination)) || cellsDistance(cell, destination) == 2) {
-                    cell.isfree = true;
-                    destination.isfree = false;
-                    shapeDestination.setFill(cell.color);
-                    destination.color = cell.color;
-                    cell.color = Color.WHITE;
-                    shapeCell.setFill(Color.WHITE);
+                else if(cellsDistance(from, to) == 2) {
+                     return true;
                 }
             }
+        return false;
         }
-    }
 
-    public boolean isBetween(CheckerCell a, CheckerCell b) {
-        if (a.getQ() + 2 == b.getQ())
-            q = a.getQ();
-        else if (a.getQ() - 2 == b.getQ())
-            q = b.getQ();
-        else if (a.getQ() == b.getQ())
-            q = a.getQ();
+
+    public boolean isBetween(Cell a, Cell b) {
+        System.out.println("Qfrom :" + a.getPoint().getQ()+"RFrom"+a.getPoint().getR());
+        System.out.println("QTo :" + b.getPoint().getQ()+"RTo"+b.getPoint().getR());
+
+        if (a.getPoint().getQ() + 2 == b.getPoint().getQ())
+            q = (int)a.getPoint().getQ();
+        else if (a.getPoint().getQ() - 2 == b.getPoint().getQ())
+            q = (int)b.getPoint().getQ();
+        else if (a.getPoint().getQ() == b.getPoint().getQ())
+            q = (int)a.getPoint().getQ();
         else
             return false;
 
-        if (a.getR() + 2 == b.getR())
-            r = a.getR();
-        else if (a.getR() - 2 == b.getR())
-            r = b.getR();
-        else if (a.getR() == b.getR())
-            r = a.getR();
+        if (a.getPoint().getR() + 2 == b.getPoint().getR())
+            r = (int)a.getPoint().getR();
+        else if (a.getPoint().getR() - 2 == b.getPoint().getR())
+            r =(int) b.getPoint().getR();
+        else if (a.getPoint().getR() == b.getPoint().getR())
+            r = (int)a.getPoint().getR();
         else
             return false;
 
@@ -87,23 +68,33 @@ public class Move {
     }
 
     public boolean findCell(int r, int q) {
-            findedCell = new CheckerCell(q, r);
-            for (int j = 0; j < board.cells.size(); j++) {
-                if (board.cells.get(j) != null) {
-                    if (findedCell.getQ() == board.cells.get(j).getQ() && findedCell.getR() == board.cells.get(j).getR() && board.cells.get(j).isfree == false)
-                        if (cellsDistance(findedCell, destination) == 2)
-                            return true;
+    System.out.println(r + " " + " " + q);
+    System.out.println("size"+board.board.length);
+
+        if(board.board[r][q].getOwner() != PlayerTag.NONE)
+            return true;
+
+   /* for (int i=0; i<Board.ROWS;i++){
+        for (int j=0;j<Board.COLUMNS;j++){
+            if((board.board[i][j].getPoint().getR()==r) && board.board[i][j].getPoint().getQ()==q){
+                if(board.board[i][j].getOwner()!=(PlayerTag.NONE)){
+                    return true;
                 }
             }
+        }
+        return true;
+    }
+*/
 
-        return false;
+    return false;
     }
 
 
 
-    public double cellsDistance(CheckerCell a, CheckerCell b) {
-        return (Math.abs(a.getQ() - b.getQ()) + Math.abs(a.getR() - b.getR()) + Math.abs(a.getS() - b.getS()));
+    public double cellsDistance(Cell a, Cell b) {
+        return (Math.abs(a.getPoint().getQ() - b.getPoint().getQ()) + Math.abs(a.getPoint().getR() - b.getPoint().getR()) + Math.abs(a.getPoint().getS() - b.getPoint().getS()));
     }
+
 }
 
 
