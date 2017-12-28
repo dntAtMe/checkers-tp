@@ -1,6 +1,6 @@
 package server.messages;
 
-import server.BoardType;
+import common.BoardType;
 import server.GameMessage;
 import server.GameMessageType;
 

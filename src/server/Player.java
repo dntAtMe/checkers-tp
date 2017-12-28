@@ -1,6 +1,8 @@
 package server;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Player implements Runnable {
@@ -8,12 +10,13 @@ public class Player implements Runnable {
   private ObjectOutputStream objectOutputStream;
   private Game game;
   private Socket socket;
+  private boolean running;
 
   public Player(Socket socket) throws IOException {
     this.socket = socket;
     try {
-      objectInputStream = new ObjectInputStream(socket.getInputStream());
       objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+      objectInputStream = new ObjectInputStream(socket.getInputStream());
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -21,8 +24,14 @@ public class Player implements Runnable {
     }
   }
 
-  public void run() {
+  public void start() {
+    running = true;
+  }
 
+  public void run() {
+    while (running) {
+
+    }
   }
 
   void setGame(Game game) {

@@ -1,13 +1,15 @@
 package server;
 
-public abstract class GameMessage {
+import java.io.Serializable;
+
+public abstract class GameMessage implements Serializable {
   private GameMessageType gameDataType;
 
   public GameMessage(GameMessageType gameDataType) {
     this.gameDataType = gameDataType;
   }
 
-  public GameMessageType getGameDataType() {
+  public GameMessageType getGameMessageType() {
     return gameDataType;
   }
 }

@@ -11,11 +11,13 @@ public class Server {
   private ServerSocket serverSocket;
 
   public void start() {
+    running = true;
     try {
       serverSocket = new ServerSocket(PORT);
       gameController = new GameController();
 
       while(running) {
+        System.out.println("Looking for a player...");
         Player player = new Player(serverSocket.accept());
         System.out.println("New player joined, handling...");
         gameController.handlePlayerConnecting(player);
