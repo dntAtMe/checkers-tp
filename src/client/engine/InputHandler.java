@@ -22,4 +22,5 @@ public class InputHandler {
   public void onMouseClicked(MouseEvent e) {
     game.onCellSelected(e.getX(), e.getY());
   }
+
 }

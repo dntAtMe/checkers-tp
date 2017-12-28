@@ -38,11 +38,23 @@ public class Game {
      int q = (int)p.getQ();
      int r = (int)p.getR();
 
-     if (board.board[q][r] != null) {
-
-       drawEngine.selectCell(q, r);
-       selected = board.board[q][r];
+     if (selected == null) {
+      if (board.board[q][r] != null) {
+        selected = board.board[q][r];
+        drawEngine.selectCell(q, r);
+      }
+     } else {
+       moveSelected(q, r);
      }
+    }
+
+    //TODO:
+    public void moveSelected(int x, int y) {
+      boolean canMove = client.canMove(selected.getPoint(), new Point(x, y));
+
+      if(canMove) {
+        //TODO: MOVE
+      }
     }
 
   public Point pixelToPoint(double x, double y) {

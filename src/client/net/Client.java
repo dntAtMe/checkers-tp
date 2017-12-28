@@ -1,6 +1,7 @@
 package client.net;
 
 import common.BoardType;
+import common.Point;
 import server.GameMessage;
 import server.GameMessageType;
 import server.messages.GameAnswerMessage;
@@ -40,6 +41,12 @@ public class Client {
       } catch (IOException e) {
         e.printStackTrace();
       }
+    }
+
+    //TODO:
+    public boolean canMove(Point from, Point to) {
+
+      return false;
     }
 
     public boolean canStartNewGame(int numberOfPlayers) {
