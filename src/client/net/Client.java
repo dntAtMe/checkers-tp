@@ -1,10 +1,12 @@
 package client.net;
 
+import client.engine.Game;
 import common.*;
 import common.Point;
 import server.GameMessage;
 import server.GameMessageType;
 import server.messages.GameAnswerMessage;
+import server.messages.GameJoinMessage;
 import server.messages.GameSetupMessage;
 
 import java.awt.*;
@@ -14,7 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Logger;
 
-public class Client {
+public class Client implements Runnable{
     private static final Logger log = Logger.getLogger( Client.class.getName());
 
     public static int PORT = 8000;
@@ -24,11 +26,11 @@ public class Client {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
-    public Client(){
+    Game game;
 
-    }
-    public Client(String serverAddress) {
+    public Client(String serverAddress, Game game) {
       this.serverAddress = serverAddress;
+      this.game = game;
 
       try {
         socket = new Socket(serverAddress, PORT);
@@ -47,7 +49,16 @@ public class Client {
       }
     }
 
-    public boolean canMove(Cell from, Cell to) {
+    //TODO:
+    @Override
+    public void run() {
+      while(true) {
+
+      }
+    }
+
+    //TODO:
+    public boolean canMove(Point from, Point to) {
 
 
       return false;
@@ -56,7 +67,7 @@ public class Client {
     public boolean canStartNewGame(int numberOfPlayers) {
       sendNewGameMessage(numberOfPlayers);
       GameAnswerMessage msg = readNewAnswerMessage();
-
+      log.info(msg.getDesc() + ", " + msg.getAnswer());
       if(msg != null && msg.getAnswer() == true) {
         return true;
       }
@@ -65,6 +76,14 @@ public class Client {
 
     private void sendNewGameMessage(int numberOfPlayers) {
       GameSetupMessage msg = new GameSetupMessage(BoardType.BOARD_STAR, numberOfPlayers);
+      try {
+        objectOutputStream.writeObject(msg);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    private void sendGameMessage(GameMessage msg) {
       try {
         objectOutputStream.writeObject(msg);
       } catch (IOException e) {
@@ -88,7 +107,14 @@ public class Client {
         return null;
     }
 
-    public void sendJoinGameMessage() {
-
+    //TODO:
+    public boolean canJoinGame(int numberOfPlayers) {
+      sendGameMessage(new GameJoinMessage(BoardType.BOARD_STAR, numberOfPlayers));
+      GameAnswerMessage msg = readNewAnswerMessage();
+      log.info(msg.getDesc() + ", " + msg.getAnswer());
+      if(msg != null && msg.getAnswer() == true) {
+        return true;
+      }
+      return false;
     }
 }

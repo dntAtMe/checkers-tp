@@ -30,7 +30,7 @@ public class MenuScene {
 
     buttonJoinGame = new Button("Join game");
     buttonJoinGame.setOnAction(actionEvent -> {
-      inputHandler.onJoinGameSelected();
+      inputHandler.onJoinGameSelected(amountOfPlayers);
     });
 
     choicePlayers = new ChoiceBox(FXCollections.observableArrayList(2, 3, 4, 6));
