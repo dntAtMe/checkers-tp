@@ -22,13 +22,12 @@ public class Game {
   boolean canMove;
 
 
-
   public Game(Window window) {
     drawEngine = new DrawEngine(window);
   }
 
   public void startNewGame(int numberOfPlayers) {
-   // boolean newGame = client.canStartNewGame(numberOfPlayers);
+    // boolean newGame = client.canStartNewGame(numberOfPlayers);
     boolean newGame = true;
     if (newGame) {
       board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
@@ -44,7 +43,7 @@ public class Game {
   }
 
 
-  public void onCellEntered(double x, double y){
+  public void onCellEntered(double x, double y) {
 /*
     Point point = pixelToPoint(x, y);
     int q = (int)point.getQ();
@@ -57,7 +56,7 @@ public class Game {
 */
   }
 
-  public void onCellExited(double x, double y){
+  public void onCellExited(double x, double y) {
 /*
     Point point = pixelToPoint(x, y);
     int a = (int)point.getQ();
@@ -71,46 +70,60 @@ public class Game {
 
 
   }
+
   public void onCellSelected(double x, double y) {
 
-     Point p = pixelToPoint(x, y);
-     int q = (int)p.getQ();
-     int r = (int)p.getR();
+    Point p = pixelToPoint(x, y);
+    int q = (int) p.getQ();
+    int r = (int) p.getR();
 
-     if (selected == null) {
+    if (selected == null) {
       if (board.board[q][r] != null) {
         selected = board.board[q][r];
         //drawEngine.selectCell(q, r);
       }
-     } else {
-       change = board.board[q][r];
-       moveSelected(selected,change);
-     }
+    } else {
+      change = board.board[q][r];
+      moveSelected(selected, change);
     }
+  }
 
-    //TODO:
-    public void moveSelected(Cell from, Cell to) {
-           // if (canMove = client.canMove(from, to){
+  //TODO:
+  public void moveSelected(Cell from, Cell to) {
+    // if (canMove = client.canMove(from, to){
 
-      if (from.getOwner() != PlayerTag.NONE && to.getOwner().equals(PlayerTag.NONE)) {
-        if(move.canMove(from,to)){
-          System.out.println("<o");
-          drawEngine.onMove(from,to);
-        }
+    if (from.getOwner() != PlayerTag.NONE && to.getOwner().equals(PlayerTag.NONE)) {
+      if (move.canMove(from, to)) {
+        drawEngine.onMove(from, to);
+        changePosition(from, to);
       }
-      selected = null;
-
     }
+    selected = null;
+
+  }
 
   public Point pixelToPoint(double x, double y) {
     x = (x - DrawEngine.WIDTH / 2) / DrawEngine.WIDTH;
 
     double t1 = y / DrawEngine.SIZE, t2 = Math.floor(x + t1);
-    int r = (int)Math.floor((Math.floor(t1 - x) + t2) / 3);
-    int q = (int)Math.floor((Math.floor(2 * x + 1) + t2) / 3) - r + 6;
-    System.out.println("SELECTED " + q + ", " + r);
+    int r = (int) Math.floor((Math.floor(t1 - x) + t2) / 3);
+    int q = (int) Math.floor((Math.floor(2 * x + 1) + t2) / 3) - r + 6;
 
     return new Point(q, r);
   }
 
-}
+  public void changePosition(Cell from, Cell to) {
+    Cell[] cells = new Cell[10];
+    Cell cell = new Cell();
+    //to bo wczesniej zmienilam wlascicieli
+    cells = board.lastPosition.get(to.getOwner()).clone();
+
+    for (int i = 0; i < 10; i++) {
+      if (cells[i].getPoint().getQ() == from.getPoint().getQ() && cells[i].getPoint().getR() == from.getPoint().getR()) {
+        cells[i] = to;
+      }
+    }
+      board.lastPosition.put(from.getOwner(), cells);
+    }
+  }
+

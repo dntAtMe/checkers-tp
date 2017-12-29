@@ -1,11 +1,15 @@
 package common;
 
 import client.FileManager;
+import main.java.sample.Player;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChineseCheckersBoardFactory {
+
 
   public static Board createBoard(int numberOfPlayers) {
     switch (numberOfPlayers) {
@@ -34,6 +38,7 @@ public class ChineseCheckersBoardFactory {
         currentChar = lines[y].charAt(x);
         PlayerTag[] owners = PlayerTag.values();
 
+
         if (currentChar == ' ')
           continue;
         else {
@@ -48,6 +53,9 @@ public class ChineseCheckersBoardFactory {
 
   public static Board createTwoPlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
+    Cell[] cells = new Cell[10];
+    cells = cleanArray().clone();
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
@@ -57,15 +65,32 @@ public class ChineseCheckersBoardFactory {
                 && board[x][y].getOwner() != PlayerTag.PLAYER_4) {
           board[x][y].setOwner(PlayerTag.NONE);
           continue;
+        } else {
+
+          if (lastPosition.containsKey(board[x][y].getOwner()) == false) {
+            cells = cleanArray().clone();
+            lastPosition.put(board[x][y].getOwner(), cells);
+          }
+
+          cells = lastPosition.get(board[x][y].getOwner()).clone();
+          cells[cellsLength(cells)] = board[x][y];
+          lastPosition.put(board[x][y].getOwner(), cells);
+
         }
       }
     }
+    cells = lastPosition.get(PlayerTag.PLAYER_1).clone();
 
-    return new Board(board);
+    return new Board(board, lastPosition);
+
   }
 
   public static Board createThreePlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
+    Cell[] cells = new Cell[10];
+    cells=cleanArray().clone();
+
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
@@ -77,14 +102,31 @@ public class ChineseCheckersBoardFactory {
           continue;
 
         }
+        else {
+
+          if(lastPosition.containsKey(board[x][y].getOwner())== false) {
+            cells=cleanArray().clone();
+            lastPosition.put(board[x][y].getOwner(),cells);
+          }
+
+          cells=lastPosition.get(board[x][y].getOwner()).clone();
+          cells[cellsLength(cells)]=board[x][y];
+          lastPosition.put(board[x][y].getOwner(),cells);
+
+        }
       }
     }
 
-    return new Board(board);
+    return new Board(board, lastPosition);
   }
 
   public static Board createFourPlayersBoard() {
+    int i=0;
     Cell[][] board = createBoard();
+    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
+    Cell[] cells = new Cell[10];
+    cells=cleanArray().clone();
+
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
@@ -94,21 +136,76 @@ public class ChineseCheckersBoardFactory {
                 && board[x][y].getOwner() != PlayerTag.PLAYER_3
                 && board[x][y].getOwner() != PlayerTag.PLAYER_5
                 && board[x][y].getOwner() != PlayerTag.PLAYER_6) {
-          board[x][y].setOwner(PlayerTag.NONE);
-          continue;
+
+                board[x][y].setOwner(PlayerTag.NONE);
+
+        } else {
+
+          if(lastPosition.containsKey(board[x][y].getOwner())== false) {
+              cells=cleanArray().clone();
+              lastPosition.put(board[x][y].getOwner(),cells);
+            }
+
+          cells=lastPosition.get(board[x][y].getOwner()).clone();
+          cells[cellsLength(cells)]=board[x][y];
+          lastPosition.put(board[x][y].getOwner(),cells);
 
         }
       }
     }
 
-    return new Board(board);
+    /* HOW TO GET INTO LASTPOSITION PARAMETERS
+    cells=lastPosition.get(PlayerTag.PLAYER_2).clone();
+
+    for (int j=0;j<10;j++) {
+      System.out.println("( " + cells[j].getPoint().getQ() + " , " + cells[j].getPoint().getR() + " )");
+    }
+    */
+
+    return new Board(board, lastPosition);
   }
 
   public static Board createSixPlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
+    Cell[] cells = new Cell[10];
+    cells=cleanArray().clone();
 
-    return new Board(board);
+    for (int y = 0; y < Board.ROWS; y++) {
+      for (int x = 0; x < Board.COLUMNS; x++) {
+        if (board[x][y] == null)
+          continue;
 
+        if (lastPosition.containsKey(board[x][y].getOwner()) == false) {
+          cells = cleanArray().clone();
+          lastPosition.put(board[x][y].getOwner(), cells);
+        }
+
+        cells = lastPosition.get(board[x][y].getOwner()).clone();
+        cells[cellsLength(cells)] = board[x][y];
+        lastPosition.put(board[x][y].getOwner(), cells);
+
+      }
+    }
+
+      return new Board(board, lastPosition);
+  }
+
+  public static int cellsLength(Cell[] cell){
+    int length=0;
+    for(int i=0;i<10;i++){
+      if(cell[i]!=null)
+        length++;
+    }
+    return length;
+  }
+
+  public static Cell[] cleanArray(){
+    Cell[] c = new Cell[10];
+    for (int i=0;i<10;i++){
+      c[i]=null;
+    }
+    return c;
   }
 }
 

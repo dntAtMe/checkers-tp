@@ -9,7 +9,7 @@ import common.Cell;
 
 public class Move {
      Board board;
-     Cell finded;
+    private Cell finded;
      int q,r;
 
 
@@ -21,7 +21,7 @@ public class Move {
 
     public boolean canMove(Cell from, Cell to) {
         if (cellsDistance(from, to) <= 4) {
-            if (((cellsDistance(from, to) == 4) && isBetween(from, to))){
+            if (((cellsDistance(from, to) == 4) && isCellBetween(from, to))){
                 return true;
             }
 
@@ -33,7 +33,7 @@ public class Move {
     }
 
 
-    public boolean isBetween(Cell a, Cell b) {
+    public boolean isCellBetween(Cell a, Cell b) {
         if(a.getPoint().getQ()==b.getPoint().getQ()) {
             if(findCellR(a, b)==true)
                 return true;
