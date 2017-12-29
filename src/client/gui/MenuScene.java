@@ -33,7 +33,7 @@ public class MenuScene {
       inputHandler.onJoinGameSelected();
     });
 
-    choicePlayers = new ChoiceBox(FXCollections.observableArrayList(2, 3, 4, 5, 6));
+    choicePlayers = new ChoiceBox(FXCollections.observableArrayList(2, 3, 4, 6));
     choicePlayers.setValue(2);
     choicePlayers.setTooltip(new Tooltip("Number of players"));
     choicePlayers.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {

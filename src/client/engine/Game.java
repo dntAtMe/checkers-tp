@@ -44,20 +44,18 @@ public class Game {
 
 
   public void onCellEntered(double x, double y){
-  /*
+
     Point point = pixelToPoint(x, y);
     int q = (int)point.getQ();
     int r = (int)point.getR();
 
     if(board.board[q][r]!=null)
       drawEngine.selectCell(q,r);
-*/
+    System.out.println("Entered!");
 
   }
 
   public void onCellExited(double x, double y){
-
-    /*
     Point point = pixelToPoint(x, y);
     int a = (int)point.getQ();
     int b = (int)point.getR();
@@ -65,7 +63,9 @@ public class Game {
     if(board.board[a][b]!=null)
       drawEngine.deselectCell(a,b);
 
-*/
+    System.out.println("Exited!");
+
+
   }
   public void onCellSelected(double x, double y) {
      Point p = pixelToPoint(x, y);
