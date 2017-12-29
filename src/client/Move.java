@@ -2,9 +2,6 @@ package client;
 
 
 import common.Board;
-import common.PlayerTag;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import common.Cell;
 
 public class Move {

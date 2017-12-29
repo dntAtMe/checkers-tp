@@ -1,11 +1,11 @@
 package client.engine;
 
 import client.Move;
+import client.PlayerTag;
 import common.*;
 import client.net.Client;
 import client.gui.DrawEngine;
 import client.gui.Window;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class Game {
@@ -18,9 +18,10 @@ public class Game {
 
   private Move move;
   private Polygon polygons[][];
-  boolean canMove;
 
   boolean isOnTurn = false;
+  PlayerTag tag;
+
   Thread clientThread;
 
 
@@ -99,14 +100,22 @@ public class Game {
       }
     } else {
       change = board.board[q][r];
-      moveSelected(selected, change);
+      attemptMove(selected, change);
     }
   }
 
+  private boolean attemptMove(Cell from, Cell to) {
+    return client.attemptMove(from.getPoint(), to.getPoint());
+  }
+
   //TODO:
-  public void moveSelected(Cell from, Cell to) {
+  public void move(Point start, Point end) {
+    Cell from = board.board[(int) start.getQ()][(int) start.getR()];
+    Cell to = board.board[(int) end.getQ()][(int) end.getR()];
 
-
+    to.setOwner(from.getOwner());
+    from.setOwner(PlayerTag.NONE);
+    drawEngine.onMove(from.getPoint(), to.getPoint(), to.getOwner());
   }
 
   public Point pixelToPoint(double x, double y) {
@@ -126,6 +135,14 @@ public class Game {
 
   public void setOnTurn(boolean onTurn) {
     isOnTurn = onTurn;
+  }
+
+  public PlayerTag getTag() {
+    return tag;
+  }
+
+  public void setTag(PlayerTag tag) {
+    this.tag = tag;
   }
 }
 

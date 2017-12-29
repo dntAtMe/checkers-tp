@@ -49,8 +49,8 @@ public class GameController {
     if ( game != null) {
       log.info("Found a matching game!");
       game.addPlayer(player);
-      startGameIfFull(game);
       player.writeGameMessage(new GameAnswerMessage(true, "Joined!"));
+      startGameIfFull(game);
     } else {
       log.info("No matching game found!");
       player.writeGameMessage(new GameAnswerMessage(false, "No matching game!"));

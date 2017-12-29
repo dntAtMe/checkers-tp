@@ -1,6 +1,9 @@
 package server;
 
-import server.messages.GameAnswerMessage;
+import client.PlayerTag;
+import server.messages.GameLogMessage;
+import server.messages.GameStatusMessage;
+import server.messages.GameTurnMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,6 +16,7 @@ public class Player extends Thread {
   private Game game;
   private Socket socket;
   private boolean running;
+  private PlayerTag tag;
 
   public Player(Socket socket) throws IOException {
     this.socket = socket;
@@ -28,16 +32,35 @@ public class Player extends Thread {
 
   public void run() {
     running = true;
-    while (running) {
+    System.out.println("Player tag: " + tag.toString());
+    writeGameMessage(new GameStatusMessage(tag));
+    writeGameMessage(new GameLogMessage("All players connected!"));
 
+
+    while (running) {
+      GameMessage msg = readGameMessage();
+      handleGameMessage(msg);
     }
   }
 
   void setGame(Game game) {
     this.game = game;
   }
+  void setPlayerTag(PlayerTag tag) { this.tag = tag; }
 
-  public GameMessage readGameMessage() {
+  //TODO:
+  private void handleGameMessage(GameMessage msg) {
+    switch(msg.getGameMessageType()) {
+      case GAME_MOVEMENT_MESSAGE:
+        game.broadcastMoveMessage(msg, tag);
+        break;
+      case GAME_LOG_MESSAGE:
+        System.out.println(((GameLogMessage) msg).getDesc());
+        break;
+    }
+  }
+
+  public synchronized GameMessage readGameMessage() {
     GameMessage msg = null;
     try {
       msg = (GameMessage) objectInputStream.readObject();
@@ -50,7 +73,7 @@ public class Player extends Thread {
     return msg;
   }
 
-  public void writeGameMessage(GameMessage msg) {
+  public synchronized void writeGameMessage(GameMessage msg) {
     try {
       objectOutputStream.writeObject(msg);
     } catch (IOException e) {
@@ -58,5 +81,7 @@ public class Player extends Thread {
     }
   }
 
-
+  public PlayerTag getTag() {
+    return tag;
+  }
 }

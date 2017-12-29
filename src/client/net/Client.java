@@ -5,9 +5,7 @@ import common.*;
 import common.Point;
 import server.GameMessage;
 import server.GameMessageType;
-import server.messages.GameAnswerMessage;
-import server.messages.GameJoinMessage;
-import server.messages.GameSetupMessage;
+import server.messages.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -53,14 +51,37 @@ public class Client implements Runnable{
     @Override
     public void run() {
       while(true) {
+        log.info("CLIENT: " + game.getTag() + ", Current turn: " + game.isOnTurn());
+        GameMessage msg = readGameMessage();
+        handleGameMessage(msg);
+      }
+    }
 
+    private void handleGameMessage(GameMessage msg) {
+      switch(msg.getGameMessageType()) {
+        case GAME_MOVEMENT_MESSAGE:
+          GameMovementMessage convertedMsg = (GameMovementMessage) msg;
+          game.move(convertedMsg.getStart(), convertedMsg.getEnd());
+          break;
+        case GAME_LOG_MESSAGE:
+          log.info(((GameLogMessage) msg).getDesc());
+          break;
+        case GAME_STATUS_MESSAGE:
+          game.setTag(((GameStatusMessage)msg).getTag());
+          break;
+        case GAME_TURN_MESSAGE:
+          GameTurnMessage turnMsg = (GameTurnMessage) msg;
+          if (turnMsg.getOnTurn() == game.getTag())
+            game.setOnTurn(true);
+          else
+            game.setOnTurn(false);
+          break;
       }
     }
 
     //TODO:
-    public boolean canMove(Point from, Point to) {
-
-
+    public boolean attemptMove(Point from, Point to) {
+      sendGameMessage(new GameMovementMessage(from, to));
       return false;
     }
 
@@ -83,7 +104,7 @@ public class Client implements Runnable{
       }
     }
 
-    private void sendGameMessage(GameMessage msg) {
+    private synchronized void sendGameMessage(GameMessage msg) {
       try {
         objectOutputStream.writeObject(msg);
       } catch (IOException e) {
@@ -91,7 +112,7 @@ public class Client implements Runnable{
       }
     }
 
-    private GameAnswerMessage readNewAnswerMessage() {
+    private synchronized GameMessage readGameMessage() {
       GameMessage msg = null;
       try {
         msg = (GameMessage) objectInputStream.readObject();
@@ -100,6 +121,25 @@ public class Client implements Runnable{
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       }
+
+      return msg;
+    }
+
+    private GameLogMessage readNewLogMessage() {
+      GameMessage msg = null;
+      try {
+        msg = (GameMessage) objectInputStream.readObject();
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      }
+
+      return (GameLogMessage) msg;
+    }
+
+    private GameAnswerMessage readNewAnswerMessage() {
+      GameMessage msg = readGameMessage();
 
       if (msg.getGameMessageType() == GameMessageType.GAME_ANSWER_MESSAGE)
         return (GameAnswerMessage) msg;

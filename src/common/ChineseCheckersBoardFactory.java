@@ -1,9 +1,8 @@
 package common;
 
 import client.FileManager;
-import main.java.sample.Player;
+import client.PlayerTag;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

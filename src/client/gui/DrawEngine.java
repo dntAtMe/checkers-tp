@@ -1,7 +1,7 @@
 package client.gui;
 
 import common.Cell;
-import common.PlayerTag;
+import client.PlayerTag;
 import common.Point;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -31,11 +31,11 @@ public class DrawEngine {
     }
   }
 
-  public void onMove(Cell from, Cell to){
-    polygons[(int)to.getPoint().getQ()][(int)to.getPoint().getR()].setFill(playerColors.get(from.getOwner()));
-    polygons[(int)from.getPoint().getQ()][(int)from.getPoint().getR()].setFill(Color.WHITE);
-    to.setOwner(from.getOwner());
-    from.setOwner(PlayerTag.NONE);
+  public void onMove(Point from, Point to, PlayerTag newTag){
+    polygons[(int)from.getQ()][(int)from.getR()].
+            setFill(playerColors.get(PlayerTag.NONE));
+    polygons[(int) to.getQ()][(int) to.getR()].
+            setFill(playerColors.get(newTag));
   }
 
   public void selectCell(int x, int y) {
