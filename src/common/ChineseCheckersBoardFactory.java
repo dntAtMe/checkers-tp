@@ -2,6 +2,7 @@ package common;
 
 import client.FileManager;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class ChineseCheckersBoardFactory {
