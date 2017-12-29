@@ -8,9 +8,9 @@ import javafx.scene.shape.Polygon;
 import common.Cell;
 
 public class Move {
-  Board board;
-  Cell finded;
-    int r, q;
+     Board board;
+     Cell finded;
+     int q,r;
 
 
     public Move(Board board){
@@ -18,80 +18,100 @@ public class Move {
         finded= new Cell();
 
     }
+
     public boolean canMove(Cell from, Cell to) {
-
-            if (cellsDistance(from, to) <= 4) {
-                if (((cellsDistance(from, to) == 4) && isBetween(from, to))){
-                    return true;
-                }
-
-                else if(cellsDistance(from, to) == 2) {
-                     return true;
-                }
+        if (cellsDistance(from, to) <= 4) {
+            if (((cellsDistance(from, to) == 4) && isBetween(from, to))){
+                return true;
             }
-        return false;
+
+            else if(cellsDistance(from, to) == 2) {
+                return true;
+            }
         }
+        return false;
+    }
 
 
     public boolean isBetween(Cell a, Cell b) {
-        System.out.println("Qfrom :" + a.getPoint().getQ()+"RFrom"+a.getPoint().getR());
-        System.out.println("QTo :" + b.getPoint().getQ()+"RTo"+b.getPoint().getR());
-
-        if (a.getPoint().getQ() + 2 == b.getPoint().getQ())
-            q = (int)a.getPoint().getQ();
-        else if (a.getPoint().getQ() - 2 == b.getPoint().getQ())
-            q = (int)b.getPoint().getQ();
-        else if (a.getPoint().getQ() == b.getPoint().getQ())
-            q = (int)a.getPoint().getQ();
-        else
-            return false;
-
-        if (a.getPoint().getR() + 2 == b.getPoint().getR())
-            r = (int)a.getPoint().getR();
-        else if (a.getPoint().getR() - 2 == b.getPoint().getR())
-            r =(int) b.getPoint().getR();
-        else if (a.getPoint().getR() == b.getPoint().getR())
-            r = (int)a.getPoint().getR();
-        else
-            return false;
-
-        if (findCell(r, q + 1))
-            return true;
-
-        if (findCell(r + 1, q))
-            return true;
-
-        if (findCell(r + 1, q + 1))
-            return true;
+        if(a.getPoint().getQ()==b.getPoint().getQ()) {
+            if(findCellR(a, b)==true)
+                return true;
+        }
+        else if(a.getPoint().getR()==b.getPoint().getR()){
+            if(findCellQ(a,b)){
+                return true;
+            }
+        }
+        else{
+            if(find(a,b))
+                return true;
+        }
 
         return false;
     }
 
-    public boolean findCell(int r, int q) {
-    System.out.println(r + " " + " " + q);
-    System.out.println("size"+board.board.length);
+    public boolean find(Cell a, Cell b) {
 
-        if(board.board[r][q].getOwner() != PlayerTag.NONE)
+       r=findR(a,b);
+       q=findQ(a,b);
+
+        if (findCell(q,r)){
             return true;
-
-   /* for (int i=0; i<Board.ROWS;i++){
-        for (int j=0;j<Board.COLUMNS;j++){
-            if((board.board[i][j].getPoint().getR()==r) && board.board[i][j].getPoint().getQ()==q){
-                if(board.board[i][j].getOwner()!=(PlayerTag.NONE)){
-                    return true;
-                }
-            }
         }
-        return true;
-    }
-*/
 
     return false;
     }
 
+    boolean findCellR(Cell a, Cell b){
+        r=findR(a,b);
+        q=(int)a.getPoint().getQ();
 
+        if (findCell(q,r)){
+            return true;
+        }
+        return false;
+    }
+
+    boolean findCellQ(Cell a, Cell b){
+        q=findQ(a,b);
+        r=(int)a.getPoint().getR();
+
+        if(findCell(q,r)){
+            return true;
+        }
+
+        return false;
+    }
+
+
+    boolean findCell(int q,int r){
+        if (board.board[q][r]!=null){
+            finded=board.board[q][r];
+            if(finded.getOwner()!=PlayerTag.NONE)
+                return true;
+        }
+        return false;
+    }
+
+    public int findR(Cell a, Cell b ){
+
+        if(a.getPoint().getR()>b.getPoint().getR())
+            return (int)a.getPoint().getR()-1;
+        else
+            return (int)b.getPoint().getR()-1;
+    }
+
+    public int findQ(Cell a, Cell b ){
+
+        if(a.getPoint().getQ()>b.getPoint().getQ())
+            return (int)a.getPoint().getQ()-1;
+        else
+            return (int)b.getPoint().getQ()-1;
+    }
 
     public double cellsDistance(Cell a, Cell b) {
+
         return (Math.abs(a.getPoint().getQ() - b.getPoint().getQ()) + Math.abs(a.getPoint().getR() - b.getPoint().getR()) + Math.abs(a.getPoint().getS() - b.getPoint().getS()));
     }
 

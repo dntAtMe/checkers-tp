@@ -15,6 +15,8 @@ public class Game {
   private Board board;
   private Cell selected = null;
   private Cell change = null;
+  private Cell tmp = null;
+  private Cell tmp_2 = null;
   private Move move;
   private Polygon polygons[][];
   boolean canMove;
@@ -23,7 +25,6 @@ public class Game {
 
   public Game(Window window) {
     drawEngine = new DrawEngine(window);
-    client = new Client();
   }
 
   public void startNewGame(int numberOfPlayers) {
@@ -44,30 +45,34 @@ public class Game {
 
 
   public void onCellEntered(double x, double y){
-  /*
+/*
     Point point = pixelToPoint(x, y);
     int q = (int)point.getQ();
     int r = (int)point.getR();
 
-    if(board.board[q][r]!=null)
-      drawEngine.selectCell(q,r);
+     if (board.board[q][r] != null){
+       tmp_2=board.board[q][r];
+        drawEngine.selectCell(q, r);
+     }
 */
-
   }
 
   public void onCellExited(double x, double y){
-
-    /*
+/*
     Point point = pixelToPoint(x, y);
     int a = (int)point.getQ();
     int b = (int)point.getR();
 
-    if(board.board[a][b]!=null)
+    if(board.board[a][b]!=null){
+      tmp=board.board[a][b];
       drawEngine.deselectCell(a,b);
-
+    }
 */
+
+
   }
   public void onCellSelected(double x, double y) {
+
      Point p = pixelToPoint(x, y);
      int q = (int)p.getQ();
      int r = (int)p.getR();
@@ -75,7 +80,7 @@ public class Game {
      if (selected == null) {
       if (board.board[q][r] != null) {
         selected = board.board[q][r];
-        drawEngine.selectCell(q, r);
+        //drawEngine.selectCell(q, r);
       }
      } else {
        change = board.board[q][r];
@@ -91,9 +96,10 @@ public class Game {
         if(move.canMove(from,to)){
           System.out.println("<o");
           drawEngine.onMove(from,to);
-          selected = null;
         }
       }
+      selected = null;
+
     }
 
   public Point pixelToPoint(double x, double y) {
