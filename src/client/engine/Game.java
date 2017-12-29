@@ -41,6 +41,7 @@ public class Game {
   //TODO:
   public void startNewGame(int numberOfPlayers) {
 
+
     boolean newGame = client.canStartNewGame(numberOfPlayers);
     //boolean newGame = true;
 
