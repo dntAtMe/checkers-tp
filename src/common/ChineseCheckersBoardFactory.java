@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO: CLEAN UP
 public class ChineseCheckersBoardFactory {
 
 
@@ -63,7 +64,7 @@ public class ChineseCheckersBoardFactory {
           continue;
         if (board[x][y].getOwner() != PlayerTag.PLAYER_1
                 && board[x][y].getOwner() != PlayerTag.PLAYER_4) {
-          board[x][y].setOwner(PlayerTag.NONE);
+          board[x][y].setOwner(PlayerTag. NONE);
           continue;
         } else {
 
@@ -81,7 +82,7 @@ public class ChineseCheckersBoardFactory {
     }
     cells = lastPosition.get(PlayerTag.PLAYER_1).clone();
 
-    return new Board(board, lastPosition);
+    return new Board(board);
 
   }
 
@@ -117,7 +118,7 @@ public class ChineseCheckersBoardFactory {
       }
     }
 
-    return new Board(board, lastPosition);
+    return new Board(board);
   }
 
   public static Board createFourPlayersBoard() {
@@ -154,15 +155,7 @@ public class ChineseCheckersBoardFactory {
       }
     }
 
-    /* HOW TO GET INTO LASTPOSITION PARAMETERS
-    cells=lastPosition.get(PlayerTag.PLAYER_2).clone();
-
-    for (int j=0;j<10;j++) {
-      System.out.println("( " + cells[j].getPoint().getQ() + " , " + cells[j].getPoint().getR() + " )");
-    }
-    */
-
-    return new Board(board, lastPosition);
+    return new Board(board);
   }
 
   public static Board createSixPlayersBoard() {
@@ -188,7 +181,7 @@ public class ChineseCheckersBoardFactory {
       }
     }
 
-      return new Board(board, lastPosition);
+      return new Board(board);
   }
 
   public static int cellsLength(Cell[] cell){

@@ -39,13 +39,10 @@ public class Game {
 
   //TODO:
   public void startNewGame(int numberOfPlayers) {
-<<<<<<< HEAD
-    // boolean newGame = client.canStartNewGame(numberOfPlayers);
-    boolean newGame = true;
-=======
+
     boolean newGame = client.canStartNewGame(numberOfPlayers);
     //boolean newGame = true;
->>>>>>> 158faad317ef31361706f0de81c0476063660627
+
     if (newGame) {
       setUpGame(numberOfPlayers);
     }
@@ -108,15 +105,7 @@ public class Game {
 
   //TODO:
   public void moveSelected(Cell from, Cell to) {
-    // if (canMove = client.canMove(from, to){
 
-    if (from.getOwner() != PlayerTag.NONE && to.getOwner().equals(PlayerTag.NONE)) {
-      if (move.canMove(from, to)) {
-        drawEngine.onMove(from, to);
-        changePosition(from, to);
-      }
-    }
-    selected = null;
 
   }
 
@@ -130,23 +119,7 @@ public class Game {
     return new Point(q, r);
   }
 
-<<<<<<< HEAD
-  public void changePosition(Cell from, Cell to) {
-    Cell[] cells = new Cell[10];
-    Cell cell = new Cell();
-    //to bo wczesniej zmienilam wlascicieli
-    cells = board.lastPosition.get(to.getOwner()).clone();
 
-    for (int i = 0; i < 10; i++) {
-      if (cells[i].getPoint().getQ() == from.getPoint().getQ() && cells[i].getPoint().getR() == from.getPoint().getR()) {
-        cells[i] = to;
-      }
-    }
-      board.lastPosition.put(from.getOwner(), cells);
-    }
-  }
-
-=======
   public boolean isOnTurn() {
     return isOnTurn;
   }
@@ -155,4 +128,4 @@ public class Game {
     isOnTurn = onTurn;
   }
 }
->>>>>>> 158faad317ef31361706f0de81c0476063660627
+
