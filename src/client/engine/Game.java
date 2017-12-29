@@ -15,31 +15,50 @@ public class Game {
   private Board board;
   private Cell selected = null;
   private Cell change = null;
-  private Cell tmp = null;
-  private Cell tmp_2 = null;
+
   private Move move;
   private Polygon polygons[][];
   boolean canMove;
 
+  boolean isOnTurn = false;
+  Thread clientThread;
+
 
   public Game(Window window) {
     drawEngine = new DrawEngine(window);
+    client = new Client("localhost", this);
+    clientThread = new Thread(client);
   }
 
+  private void setUpGame(int numberOfPlayers) {
+    clientThread.start();
+    board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
+    drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
+    move = new Move(board);
+  }
+
+  //TODO:
   public void startNewGame(int numberOfPlayers) {
+<<<<<<< HEAD
     // boolean newGame = client.canStartNewGame(numberOfPlayers);
     boolean newGame = true;
+=======
+    boolean newGame = client.canStartNewGame(numberOfPlayers);
+    //boolean newGame = true;
+>>>>>>> 158faad317ef31361706f0de81c0476063660627
     if (newGame) {
-      board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
-      drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
+      setUpGame(numberOfPlayers);
     }
-    move = new Move(board);
 
   }
 
   //TODO:
-  public void joinGame() {
+  public void joinGame(int numberOfPlayers) {
+    boolean joinedGame = client.canJoinGame(numberOfPlayers);
 
+    if(joinedGame) {
+      setUpGame(numberOfPlayers);
+    }
   }
 
 
@@ -48,7 +67,6 @@ public class Game {
     Point point = pixelToPoint(x, y);
     int q = (int)point.getQ();
     int r = (int)point.getR();
-
      if (board.board[q][r] != null){
        tmp_2=board.board[q][r];
         drawEngine.selectCell(q, r);
@@ -61,21 +79,21 @@ public class Game {
     Point point = pixelToPoint(x, y);
     int a = (int)point.getQ();
     int b = (int)point.getR();
-
     if(board.board[a][b]!=null){
       tmp=board.board[a][b];
       drawEngine.deselectCell(a,b);
     }
 */
 
-
   }
 
   public void onCellSelected(double x, double y) {
 
-    Point p = pixelToPoint(x, y);
-    int q = (int) p.getQ();
-    int r = (int) p.getR();
+    if (!isOnTurn)
+      return;
+     Point p = pixelToPoint(x, y);
+     int q = (int)p.getQ();
+     int r = (int)p.getR();
 
     if (selected == null) {
       if (board.board[q][r] != null) {
@@ -112,6 +130,7 @@ public class Game {
     return new Point(q, r);
   }
 
+<<<<<<< HEAD
   public void changePosition(Cell from, Cell to) {
     Cell[] cells = new Cell[10];
     Cell cell = new Cell();
@@ -127,3 +146,13 @@ public class Game {
     }
   }
 
+=======
+  public boolean isOnTurn() {
+    return isOnTurn;
+  }
+
+  public void setOnTurn(boolean onTurn) {
+    isOnTurn = onTurn;
+  }
+}
+>>>>>>> 158faad317ef31361706f0de81c0476063660627

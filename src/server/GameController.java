@@ -1,5 +1,8 @@
 package server;
 
+import common.BoardType;
+import server.messages.GameAnswerMessage;
+import server.messages.GameBoardMessage;
 import server.messages.GameJoinMessage;
 import server.messages.GameSetupMessage;
 
@@ -30,13 +33,45 @@ public class GameController {
     }
   }
 
+  //TODO:
   private void handleGameSetup(GameSetupMessage msg, Player player) {
     log.info("Game setup started");
+    Game game = new Game(msg.getPlayers());
+    game.addPlayer(player);
+    games.add(game);
+    player.writeGameMessage(new GameAnswerMessage(true, "Game created!"));
   }
 
+  //TODO:
   private void handleGameJoin(GameJoinMessage msg, Player player) {
-    log.info("Game join started");
+    log.info("Game join started | " + msg.getPlayers());
+    Game game = findMatchingGame(msg.getBoardType(), msg.getPlayers());
+    if ( game != null) {
+      log.info("Found a matching game!");
+      game.addPlayer(player);
+      startGameIfFull(game);
+      player.writeGameMessage(new GameAnswerMessage(true, "Joined!"));
+    } else {
+      log.info("No matching game found!");
+      player.writeGameMessage(new GameAnswerMessage(false, "No matching game!"));
+    }
+  }
 
+  private void startGameIfFull(Game game) {
+    log.info("Game full, starting players' threads!");
+    if(game.isFull()) {
+      game.start();
+    }
+  }
+
+  private Game findMatchingGame(BoardType type, int playersAmount) {
+    for (Game game : games) {
+      log.info("Looking for a game");
+      if (game.getMaxPlayersAmount() == playersAmount && !game.isFull()) {
+        return game;
+      }
+    }
+    return null;
   }
 
 }

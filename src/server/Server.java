@@ -16,6 +16,7 @@ public class Server {
       serverSocket = new ServerSocket(PORT);
       gameController = new GameController();
 
+      //TODO: Loop player handling, since it crashes on failed join attempt.
       while(running) {
         System.out.println("Looking for a player...");
         Player player = new Player(serverSocket.accept());

@@ -1,11 +1,13 @@
 package server;
 
+import server.messages.GameAnswerMessage;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Player implements Runnable {
+public class Player extends Thread {
   private ObjectInputStream objectInputStream;
   private ObjectOutputStream objectOutputStream;
   private Game game;
@@ -24,11 +26,8 @@ public class Player implements Runnable {
     }
   }
 
-  public void start() {
-    running = true;
-  }
-
   public void run() {
+    running = true;
     while (running) {
 
     }

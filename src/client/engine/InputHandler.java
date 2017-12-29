@@ -15,8 +15,8 @@ public class InputHandler {
     game.startNewGame(numberOfPlayers);
   }
 
-  public void onJoinGameSelected() {
-
+  public void onJoinGameSelected(int numberOfPlayers) {
+    game.joinGame(numberOfPlayers);
   }
 
   public void onMouseClicked(MouseEvent e) {
