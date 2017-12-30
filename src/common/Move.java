@@ -31,12 +31,10 @@ public class Move {
     }
 
     private boolean canMove(Cell from, Cell to, PlayerTag askingTag) {
-      System.out.println("canMove");
       if (from.getOwner() != askingTag)
         return false;
       if (board.isTaken(to.getPoint()))
         return false;
-      System.out.println("Hi!");
       if (cellsDistance(from, to) <= 2) {
         if (((cellsDistance(from, to) == 2) && isCellBetween(from, to))){
           return true;
@@ -49,7 +47,6 @@ public class Move {
       return false;
     }
 
-
     public boolean isCellBetween(Cell a, Cell b) {
       Point vector = Point.substract(b.getPoint(), a.getPoint());
 
@@ -57,65 +54,6 @@ public class Move {
         return true;
       return false;
 
-    }
-
-    public boolean find(Cell a, Cell b) {
-
-       r=findR(a,b);
-       q=findQ(a,b);
-
-        if (findCell(q,r)){
-            return true;
-        }
-
-    return false;
-    }
-
-    boolean findCellR(Cell a, Cell b){
-        r=findR(a,b);
-        q=(int)a.getPoint().getQ();
-
-        if (findCell(q,r)){
-            return true;
-        }
-        return false;
-    }
-
-    boolean findCellQ(Cell a, Cell b){
-        q=findQ(a,b);
-        r=(int)a.getPoint().getR();
-
-        if(findCell(q,r)){
-            return true;
-        }
-
-        return false;
-    }
-
-
-    boolean findCell(int q,int r){
-        if (board.board[q][r]!=null){
-            found =board.board[q][r];
-            if(found.getOwner()!=PlayerTag.NONE)
-                return true;
-        }
-        return false;
-    }
-
-    public int findR(Cell a, Cell b ){
-
-        if(a.getPoint().getR()>b.getPoint().getR())
-            return (int)a.getPoint().getR()-1;
-        else
-            return (int)b.getPoint().getR()-1;
-    }
-
-    public int findQ(Cell a, Cell b ){
-
-        if(a.getPoint().getQ()>b.getPoint().getQ())
-            return (int)a.getPoint().getQ()-1;
-        else
-            return (int)b.getPoint().getQ()-1;
     }
 
     public double cellsDistance(Cell a, Cell b) {
