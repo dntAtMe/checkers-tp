@@ -1,8 +1,10 @@
 package server;
 
+import common.Move;
 import common.Board;
 import common.ChineseCheckersBoardFactory;
 import client.PlayerTag;
+import common.Point;
 import server.messages.GameLogMessage;
 import server.messages.GameStatusMessage;
 import server.messages.GameTurnMessage;
@@ -13,6 +15,7 @@ import java.util.Random;
 
 public class Game {
   private Board board;
+  private Move move;
   private List<Player> players;
   private int playersAmount;
   private int currentTurn;
@@ -21,6 +24,7 @@ public class Game {
   public Game(int playersAmount) {
     players = new ArrayList<>();
     board = ChineseCheckersBoardFactory.createBoard(playersAmount);
+    move = new Move(board);
     this.playersAmount = playersAmount;
     random = new Random();
   }
@@ -28,14 +32,22 @@ public class Game {
   //TODO: another thread?
   //  TEMPORARY METHOD
   public void broadcastMoveMessage(GameMessage msg, PlayerTag tag) {
-    if (!isOnTurn(tag))
-      return;
     for (Player player : players) {
       System.out.println("Writing move@");
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " moved"));
     }
     advanceTurn();
+  }
+
+  public boolean canMove(Point from, Point to, PlayerTag askingTag) {
+   // if (!isOnTurn(askingTag))
+    //  return false;
+    if(move.canMove(from, to, askingTag)) {
+      move.makeMove(from, to);
+      return true;
+    }
+    return false;
   }
 
 
@@ -53,7 +65,7 @@ public class Game {
   }
 
   private void advanceTurn() {
-    currentTurn = ((currentTurn + 1) % players.size()) + 1;
+    currentTurn = (currentTurn % players.size()) + 1;
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
 

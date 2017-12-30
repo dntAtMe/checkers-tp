@@ -1,6 +1,6 @@
 package client.engine;
 
-import client.Move;
+import common.Move;
 import client.PlayerTag;
 import common.*;
 import client.net.Client;
@@ -39,7 +39,7 @@ public class Game {
 
   //TODO:
   public void startNewGame(int numberOfPlayers) {
-    client = new Client("localhost", this);
+    client = new Client("192.168.1.44", this);
     clientThread = new Thread(client);
 
     boolean newGame = client.canStartNewGame(numberOfPlayers);
@@ -105,6 +105,7 @@ public class Game {
     } else {
       change = board.board[q][r];
       attemptMove(selected, change);
+      selected = null;
     }
   }
 
@@ -120,6 +121,7 @@ public class Game {
     to.setOwner(from.getOwner());
     from.setOwner(PlayerTag.NONE);
     drawEngine.onMove(from.getPoint(), to.getPoint(), to.getOwner());
+    selected = null;
   }
 
   public Point pixelToPoint(double x, double y) {

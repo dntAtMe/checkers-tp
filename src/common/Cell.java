@@ -26,4 +26,5 @@ public class Cell {
   public void setOwner(PlayerTag playerTag) {
     owner = playerTag;
   }
+
 }
