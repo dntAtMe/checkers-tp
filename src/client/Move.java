@@ -5,7 +5,7 @@ import common.Board;
 import common.Cell;
 
 public class Move {
-     Board board;
+    Board board;
     private Cell finded;
      int q,r;
 
@@ -30,7 +30,7 @@ public class Move {
     }
 
 
-    public boolean isCellBetween(Cell a, Cell b) {
+    private boolean isCellBetween(Cell a, Cell b) {
         if(a.getPoint().getQ()==b.getPoint().getQ()) {
             if(findCellR(a, b)==true)
                 return true;
@@ -48,7 +48,7 @@ public class Move {
         return false;
     }
 
-    public boolean find(Cell a, Cell b) {
+    private boolean find(Cell a, Cell b) {
 
        r=findR(a,b);
        q=findQ(a,b);
@@ -60,7 +60,7 @@ public class Move {
     return false;
     }
 
-    boolean findCellR(Cell a, Cell b){
+    private boolean findCellR(Cell a, Cell b){
         r=findR(a,b);
         q=(int)a.getPoint().getQ();
 
@@ -70,7 +70,7 @@ public class Move {
         return false;
     }
 
-    boolean findCellQ(Cell a, Cell b){
+    private boolean findCellQ(Cell a, Cell b){
         q=findQ(a,b);
         r=(int)a.getPoint().getR();
 
@@ -82,7 +82,7 @@ public class Move {
     }
 
 
-    boolean findCell(int q,int r){
+   private boolean findCell(int q,int r){
         if (board.board[q][r]!=null){
             finded=board.board[q][r];
             if(finded.getOwner()!=PlayerTag.NONE)
@@ -91,7 +91,7 @@ public class Move {
         return false;
     }
 
-    public int findR(Cell a, Cell b ){
+    private int findR(Cell a, Cell b ){
 
         if(a.getPoint().getR()>b.getPoint().getR())
             return (int)a.getPoint().getR()-1;
@@ -99,7 +99,7 @@ public class Move {
             return (int)b.getPoint().getR()-1;
     }
 
-    public int findQ(Cell a, Cell b ){
+    private int findQ(Cell a, Cell b ){
 
         if(a.getPoint().getQ()>b.getPoint().getQ())
             return (int)a.getPoint().getQ()-1;
@@ -107,7 +107,7 @@ public class Move {
             return (int)b.getPoint().getQ()-1;
     }
 
-    public double cellsDistance(Cell a, Cell b) {
+    private double cellsDistance(Cell a, Cell b) {
 
         return (Math.abs(a.getPoint().getQ() - b.getPoint().getQ()) + Math.abs(a.getPoint().getR() - b.getPoint().getR()) + Math.abs(a.getPoint().getS() - b.getPoint().getS()));
     }

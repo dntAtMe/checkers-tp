@@ -26,6 +26,7 @@ public class Game {
 
 
   public Game(Window window) {
+
     drawEngine = new DrawEngine(window);
   }
 

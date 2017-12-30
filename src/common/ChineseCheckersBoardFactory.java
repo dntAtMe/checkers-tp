@@ -168,15 +168,27 @@ public class ChineseCheckersBoardFactory {
         if (board[x][y] == null)
           continue;
 
-        if (lastPosition.containsKey(board[x][y].getOwner()) == false) {
-          cells = cleanArray().clone();
+        if (board[x][y].getOwner() != PlayerTag.PLAYER_1
+                && board[x][y].getOwner() != PlayerTag.PLAYER_2
+                && board[x][y].getOwner() != PlayerTag.PLAYER_3
+                && board[x][y].getOwner() != PlayerTag.PLAYER_4
+                && board[x][y].getOwner() != PlayerTag.PLAYER_5
+                && board[x][y].getOwner() != PlayerTag.PLAYER_6) {
+
+          board[x][y].setOwner(PlayerTag.NONE);
+
+        } else {
+
+          if (lastPosition.containsKey(board[x][y].getOwner()) == false) {
+            cells = cleanArray().clone();
+            lastPosition.put(board[x][y].getOwner(), cells);
+          }
+
+          cells = lastPosition.get(board[x][y].getOwner()).clone();
+          cells[cellsLength(cells)] = board[x][y];
           lastPosition.put(board[x][y].getOwner(), cells);
+
         }
-
-        cells = lastPosition.get(board[x][y].getOwner()).clone();
-        cells[cellsLength(cells)] = board[x][y];
-        lastPosition.put(board[x][y].getOwner(), cells);
-
       }
     }
 

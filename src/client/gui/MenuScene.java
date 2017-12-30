@@ -5,9 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import client.engine.InputHandler;
@@ -36,14 +34,27 @@ public class MenuScene {
     HBox numbersOfPlayer = new HBox();
     numbersOfPlayer.setSpacing(60.0);
 
+    HBox serverInformation = new HBox();
+    serverInformation.setSpacing(60.0);
+    final String[] serverIp = new String[1];
+
     Text information = new Text("Choose number \n of players");
+    information.setFont(Font.font(java.awt.Font.DIALOG, 20));
+    Text ipInformation = new Text("Choose \n server ip");
+    ipInformation.setFont(Font.font(java.awt.Font.DIALOG, 20));
+    TextField ip = new TextField();
+    ip.setStyle("-fx-background-color:#B3B3B3;");
+
 
     buttonNewGame = new Button("New game");
     buttonNewGame.setStyle("-fx-font: 22 arial; -fx-base: #c0c0c0;");
+
     buttonNewGame.setOnAction(actionEvent -> {
+      serverIp[0] =ip.getText();
+      System.out.println("Server ip : "+serverIp[0]);
       box = new BotsBox(amountOfPlayers);
       amountOfBots=box.display();
-      inputHandler.onNewGameSelected(amountOfPlayers, amountOfBots);
+      inputHandler.onNewGameSelected(amountOfPlayers, amountOfBots,serverIp[0]);
       System.out.println("Ilosc botow: " + amountOfBots);
     });
 
@@ -53,6 +64,8 @@ public class MenuScene {
     buttonJoinGame.setStyle("-fx-font: 22 arial; -fx-base: #c0c0c0;");
 
     buttonJoinGame.setOnAction(actionEvent -> {
+      serverIp[0] =ip.getText();
+      System.out.println("server ip : "+serverIp[0]);
       inputHandler.onJoinGameSelected(amountOfPlayers);
     });
 
@@ -70,17 +83,18 @@ public class MenuScene {
     choicePlayers.setStyle("-fx-font: 22 arial; -fx-base: #c0c0c0;");
 
     choicePlayers.setMinSize(50, 50);
-    information.setFont(Font.font(java.awt.Font.DIALOG, 20));
 
     startingGame.getChildren().addAll(buttonJoinGame, buttonNewGame);
     numbersOfPlayer.getChildren().addAll(information, choicePlayers);
+    serverInformation.getChildren().addAll(ipInformation,ip);
     border.setTop(numbersOfPlayer);
     border.setBottom(startingGame);
+    border.setCenter(serverInformation);
 
     border.setMargin(numbersOfPlayer, new Insets(50,20,12,50));
     border.setMargin(startingGame, new Insets(10,40,40,40));
-
-        scene = new Scene(border, 400, 300);
+    border.setMargin(serverInformation, new Insets(40,40,40,50));
+        scene = new Scene(border, 400, 400);
 
     }
 
