@@ -72,15 +72,17 @@ public class Game {
   }
 
   public void start(){
-    currentTurn = (random.nextInt() % players.size()) + 1;
+    currentTurn = random.nextInt(playersAmount) + 1;
     for (Player player : players) {
       player.setPlayerTag(PlayerTag.values()[1 + players.indexOf(player)]);
-      player.start();
     }
     System.out.println(getActivePlayer().toString());
     broadcastStatusMessage();
     System.out.println(getActivePlayer().toString());
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
+    for (Player player : players) {
+      player.start();
+    }
   }
 
 

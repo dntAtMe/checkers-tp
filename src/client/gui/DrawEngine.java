@@ -70,6 +70,7 @@ public class DrawEngine {
       window.onMouseExited(ex);
     });
 
+
     window.setScene(scene.scene);
   }
 

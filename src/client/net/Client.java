@@ -51,9 +51,12 @@ public class Client implements Runnable{
     @Override
     public void run() {
       while(true) {
-        log.info("CLIENT: " + game.getTag() + ", Current turn: " + game.isOnTurn());
+        if(game.isOnTurn())
+          continue;
         GameMessage msg = readGameMessage();
         handleGameMessage(msg);
+        log.info("CLIENT: " + game.getTag() + ", Current turn: " + game.isOnTurn());
+
       }
     }
 
@@ -67,10 +70,12 @@ public class Client implements Runnable{
           log.info(((GameLogMessage) msg).getDesc());
           break;
         case GAME_STATUS_MESSAGE:
+          log.info("Got status message: " + ((GameStatusMessage)msg).getTag().toString());
           game.setTag(((GameStatusMessage)msg).getTag());
           break;
         case GAME_TURN_MESSAGE:
           GameTurnMessage turnMsg = (GameTurnMessage) msg;
+          log.info("Got turn message: " + turnMsg.getOnTurn().toString());
           if (turnMsg.getOnTurn() == game.getTag())
             game.setOnTurn(true);
           else
@@ -81,6 +86,7 @@ public class Client implements Runnable{
 
     //TODO:
     public boolean attemptMove(Point from, Point to) {
+      log.info("Moving");
       sendGameMessage(new GameMovementMessage(from, to));
       return false;
     }

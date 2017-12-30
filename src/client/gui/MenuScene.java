@@ -1,26 +1,18 @@
 package client.gui;
 
-import com.sun.prism.paint.Color;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import client.engine.InputHandler;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class MenuScene {
 
@@ -29,9 +21,9 @@ public class MenuScene {
   private ChoiceBox choicePlayers;
   private ChoiceBox choiceBoot;
   private InputHandler inputHandler;
-  BootBox box;
+  BotsBox box;
   int amountOfPlayers = 2;
-  int amountOfBoot = 0;
+  int amountOfBots = 0;
   int[] optionsOfPlayers = {2, 3, 4, 6};
   private Scene scene;
 
@@ -49,10 +41,10 @@ public class MenuScene {
     buttonNewGame = new Button("New game");
     buttonNewGame.setStyle("-fx-font: 22 arial; -fx-base: #c0c0c0;");
     buttonNewGame.setOnAction(actionEvent -> {
-      inputHandler.onNewGameSelected(amountOfPlayers);
-      box = new BootBox(amountOfPlayers);
-      amountOfBoot=box.display();
-      System.out.println("Ilosc bootow: " +amountOfBoot);
+      box = new BotsBox(amountOfPlayers);
+      amountOfBots=box.display();
+      inputHandler.onNewGameSelected(amountOfPlayers, amountOfBots);
+      System.out.println("Ilosc botow: " + amountOfBots);
     });
 
     buttonNewGame.setMinSize(100, 100);

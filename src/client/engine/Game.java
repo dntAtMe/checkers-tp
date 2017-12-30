@@ -27,8 +27,6 @@ public class Game {
 
   public Game(Window window) {
     drawEngine = new DrawEngine(window);
-    client = new Client("localhost", this);
-    clientThread = new Thread(client);
   }
 
   private void setUpGame(int numberOfPlayers) {
@@ -40,7 +38,8 @@ public class Game {
 
   //TODO:
   public void startNewGame(int numberOfPlayers) {
-
+    client = new Client("localhost", this);
+    clientThread = new Thread(client);
 
     boolean newGame = client.canStartNewGame(numberOfPlayers);
     //boolean newGame = true;
@@ -53,6 +52,9 @@ public class Game {
 
   //TODO:
   public void joinGame(int numberOfPlayers) {
+    client = new Client("localhost", this);
+    clientThread = new Thread(client);
+
     boolean joinedGame = client.canJoinGame(numberOfPlayers);
 
     if(joinedGame) {

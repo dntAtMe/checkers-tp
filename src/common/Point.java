@@ -1,6 +1,8 @@
 package common;
 
-public class Point {
+import java.io.Serializable;
+
+public class Point implements Serializable {
   private final double q, r, s;
 
   public Point(double q, double r) {

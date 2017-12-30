@@ -12,15 +12,13 @@ import client.engine.InputHandler;
 
 public class Window extends Application implements IWindow {
 
-  private Stage stage,information;
-  Scene stageInformation;
+  private Stage stage;
 
   private InputHandler inputHandler;
   private MenuScene menuScene;
 
   @Override
   public void start(Stage mainStage) throws Exception {
-    final Group rootGroup = new Group();
 
     stage = mainStage;
     inputHandler = new InputHandler(this);

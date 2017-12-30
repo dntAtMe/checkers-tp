@@ -38,6 +38,7 @@ public class GameController {
     log.info("Game setup started");
     Game game = new Game(msg.getPlayers());
     game.addPlayer(player);
+    player.setGame(game);
     games.add(game);
     player.writeGameMessage(new GameAnswerMessage(true, "Game created!"));
   }
@@ -49,6 +50,7 @@ public class GameController {
     if ( game != null) {
       log.info("Found a matching game!");
       game.addPlayer(player);
+      player.setGame(game);
       player.writeGameMessage(new GameAnswerMessage(true, "Joined!"));
       startGameIfFull(game);
     } else {
