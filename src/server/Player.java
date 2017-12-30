@@ -2,6 +2,7 @@ package server;
 
 import client.PlayerTag;
 import server.messages.GameLogMessage;
+import server.messages.GameMovementMessage;
 import server.messages.GameStatusMessage;
 import server.messages.GameTurnMessage;
 
@@ -52,7 +53,10 @@ public class Player extends Thread {
   private void handleGameMessage(GameMessage msg) {
     switch(msg.getGameMessageType()) {
       case GAME_MOVEMENT_MESSAGE:
-        game.broadcastMoveMessage(msg, tag);
+        System.out.println("Moved");
+        GameMovementMessage moveMsg = (GameMovementMessage)msg;
+        if(game.canMove(moveMsg.getStart(), moveMsg.getEnd(), tag))
+          game.broadcastMoveMessage(msg, tag);
         break;
       case GAME_LOG_MESSAGE:
         System.out.println(((GameLogMessage) msg).getDesc());

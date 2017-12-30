@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO: CLEAN UP
+//TODO: CLEAN UP AND SET TAGS PROPERLY
 public class ChineseCheckersBoardFactory {
 
 
@@ -61,9 +61,11 @@ public class ChineseCheckersBoardFactory {
       for (int x = 0; x < Board.COLUMNS; x++) {
         if (board[x][y] == null)
           continue;
-        if (board[x][y].getOwner() != PlayerTag.PLAYER_1
-                && board[x][y].getOwner() != PlayerTag.PLAYER_4) {
-          board[x][y].setOwner(PlayerTag. NONE);
+        if(board[x][y].getOwner() == PlayerTag.PLAYER_4)
+          board[x][y].setOwner(PlayerTag.PLAYER_2);
+        else
+        if (board[x][y].getOwner() != PlayerTag.PLAYER_1) {
+            board[x][y].setOwner(PlayerTag. NONE);
           continue;
         } else {
 
