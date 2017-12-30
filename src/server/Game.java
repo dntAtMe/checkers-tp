@@ -31,6 +31,7 @@ public class Game {
     if (!isOnTurn(tag))
       return;
     for (Player player : players) {
+      System.out.println("Writing move@");
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " moved"));
     }

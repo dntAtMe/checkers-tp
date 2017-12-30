@@ -60,7 +60,7 @@ public class Player extends Thread {
     }
   }
 
-  GameMessage readGameMessage() {
+  public GameMessage readGameMessage() {
     GameMessage msg = null;
     try {
       msg = (GameMessage) objectInputStream.readObject();
@@ -73,8 +73,8 @@ public class Player extends Thread {
     return msg;
   }
 
-  public synchronized void writeGameMessage(GameMessage msg) {
-    try {git add
+  public void writeGameMessage(GameMessage msg) {
+    try {
       objectOutputStream.writeObject(msg);
     } catch (IOException e) {
       e.printStackTrace();

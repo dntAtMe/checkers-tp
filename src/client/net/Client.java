@@ -51,8 +51,8 @@ public class Client implements Runnable{
     @Override
     public void run() {
       while(true) {
-        if(game.isOnTurn())
-          continue;
+//        if(game.isOnTurn())
+ //         continue;
         GameMessage msg = readGameMessage();
         handleGameMessage(msg);
         log.info("CLIENT: " + game.getTag() + ", Current turn: " + game.isOnTurn());
@@ -110,7 +110,7 @@ public class Client implements Runnable{
       }
     }
 
-    private synchronized void sendGameMessage(GameMessage msg) {
+    private void sendGameMessage(GameMessage msg) {
       try {
         objectOutputStream.writeObject(msg);
       } catch (IOException e) {
@@ -118,7 +118,7 @@ public class Client implements Runnable{
       }
     }
 
-    private synchronized GameMessage readGameMessage() {
+    private GameMessage readGameMessage() {
       GameMessage msg = null;
       try {
         msg = (GameMessage) objectInputStream.readObject();
