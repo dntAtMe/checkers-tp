@@ -17,7 +17,6 @@ public class Game {
   private Cell change = null;
 
   private Move move;
-  private Polygon polygons[][];
 
   boolean isOnTurn = false;
   PlayerTag tag;
