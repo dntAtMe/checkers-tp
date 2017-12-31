@@ -56,6 +56,8 @@ public class BotsBox {
                 break;
         }
 
+        choiceBots.setValue(0);
+
         choiceBots.setOnAction(e ->
         {
             for (int i=0;i<5;i++) {

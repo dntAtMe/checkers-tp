@@ -11,7 +11,7 @@ public class InputHandler {
     game = new Game(window);
   }
 
-  public void onNewGameSelected(int numberOfPlayers, int amountOfBots) {
+  public void onNewGameSelected(int numberOfPlayers, int amountOfBots, String ipAddress) {
     game.startNewGame(numberOfPlayers);
   }
 
