@@ -1,10 +1,7 @@
 package main.java.sample;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-
-import java.util.ArrayList;
 
 public class Move {
 
