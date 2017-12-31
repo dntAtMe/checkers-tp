@@ -32,9 +32,9 @@ public class DrawEngine {
   }
 
   public void onMove(Point from, Point to, PlayerTag newTag){
-    polygons[(int)from.getQ()][(int)from.getR()].
+    polygons[from.getQ()][from.getR()].
             setFill(playerColors.get(PlayerTag.NONE));
-    polygons[(int) to.getQ()][(int) to.getR()].
+    polygons[to.getQ()][to.getR()].
             setFill(playerColors.get(newTag));
   }
 
@@ -54,24 +54,24 @@ public class DrawEngine {
     for (int x = 0; x < width; x++){
       for (int y = 0; y < height; y++) {
         if(polygons[x][y] != null)
-        scene.root.getChildren().add(polygons[x][y]);
+          scene.addChildren(polygons[x][y]);
       }
     }
 
-    scene.scene.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+    scene.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
       window.onMouseClicked(e);
     });
 
-    scene.scene.addEventFilter(MouseEvent.MOUSE_ENTERED, en -> {
+    scene.getScene().addEventFilter(MouseEvent.MOUSE_ENTERED, en -> {
       window.onMouseEntered(en);
     });
 
-    scene.scene.addEventFilter(MouseEvent.MOUSE_EXITED, ex -> {
+    scene.getScene().addEventFilter(MouseEvent.MOUSE_EXITED, ex -> {
       window.onMouseExited(ex);
     });
 
 
-    window.setScene(scene.scene);
+    window.setScene(scene.getScene());
   }
 
   private void prepareBoard(int width, int height, Cell[][] board) {
@@ -95,8 +95,10 @@ public class DrawEngine {
       double angleRad = Math.PI / 180 * angleDeg;
       double centerX = x * WIDTH + WIDTH / 2 * y - 5.5 * WIDTH;
       double centerY = SIZE + y * HEIGHT * 3/4 ;
-      Point p = new Point(centerX + SIZE * Math.cos(angleRad), centerY + SIZE * Math.sin(angleRad));
-      poly.getPoints().addAll(p.getQ(), p.getR());
+      double pointX = centerX + SIZE * Math.cos(angleRad);
+      double pointY = centerY + SIZE * Math.sin(angleRad);
+
+      poly.getPoints().addAll(pointX, pointY);
     }
     return poly;
   }

@@ -17,7 +17,6 @@ public class Game {
   private Cell change = null;
 
   private Move move;
-  private Polygon polygons[][];
 
   boolean isOnTurn = false;
   PlayerTag tag;
@@ -38,7 +37,7 @@ public class Game {
 
   //TODO:
   public void startNewGame(int numberOfPlayers) {
-    client = new Client("192.168.1.44", this);
+    client = new Client("localhost", this);
     clientThread = new Thread(client);
 
     boolean newGame = client.canStartNewGame(numberOfPlayers);

@@ -19,20 +19,31 @@ public class Board {
     this.board = board;
   }
 
-  public boolean isTaken(Point point) {
-    return isTaken((int) point.getQ(), (int) point.getR());
+  public boolean isTaken(Point p) {
+    return isTaken(p.getQ(),p.getR());
   }
 
   public boolean isTaken(int x, int y) {
     Cell cell = board[x][y];
-
     if (cell == null || cell.getOwner() == PlayerTag.NONE)
       return false;
     return true;
   }
 
-  public Cell getCell (Point point) {
-    return board[(int) point.getQ()][(int) point.getR()];
+  public void setCell(Point p, PlayerTag tag) {
+    getCell(p).setOwner(tag);
+  }
+
+  public void setCellEmpty(Point p) {
+    getCell(p).setOwner(PlayerTag.NONE);
+  }
+
+  public void copyOwner(Point target, Point source) {
+    getCell(target).setOwner(getCell(source).getOwner());
+  }
+
+  public Cell getCell (Point p) {
+    return board[p.getQ()][p.getR()];
   }
 
   public boolean isDiagonal(Point point) {

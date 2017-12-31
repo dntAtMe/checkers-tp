@@ -53,106 +53,63 @@ public class ChineseCheckersBoardFactory {
 
   public static Board createTwoPlayersBoard() {
     Cell[][] board = createBoard();
-    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
-    Cell[] cells = new Cell[10];
-    cells = cleanArray().clone();
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
-        if (board[x][y] == null)
+        Cell cell = board[x][y];
+        if (cell == null)
           continue;
-        if(board[x][y].getOwner() == PlayerTag.PLAYER_4)
-          board[x][y].setOwner(PlayerTag.PLAYER_2);
-        else
-        if (board[x][y].getOwner() != PlayerTag.PLAYER_1) {
-            board[x][y].setOwner(PlayerTag. NONE);
-          continue;
-        } else {
+        if (cell.getOwner() == PlayerTag.PLAYER_4)
+          cell.setOwner(PlayerTag.PLAYER_2);
+        else if (cell.getOwner() != PlayerTag.PLAYER_1)
+          cell.setOwner(PlayerTag.NONE);
 
-          if (lastPosition.containsKey(board[x][y].getOwner()) == false) {
-            cells = cleanArray().clone();
-            lastPosition.put(board[x][y].getOwner(), cells);
-          }
-
-          cells = lastPosition.get(board[x][y].getOwner()).clone();
-          cells[cellsLength(cells)] = board[x][y];
-          lastPosition.put(board[x][y].getOwner(), cells);
-
-        }
       }
     }
-    cells = lastPosition.get(PlayerTag.PLAYER_1).clone();
-
     return new Board(board);
 
   }
 
   public static Board createThreePlayersBoard() {
     Cell[][] board = createBoard();
-    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
-    Cell[] cells = new Cell[10];
-    cells=cleanArray().clone();
-
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
-        if (board[x][y] == null)
+        Cell cell = board[x][y];
+        if (cell == null)
           continue;
-        if (board[x][y].getOwner() != PlayerTag.PLAYER_1
-                && board[x][y].getOwner() != PlayerTag.PLAYER_3 && board[x][y].getOwner() != PlayerTag.PLAYER_5) {
-          board[x][y].setOwner(PlayerTag.NONE);
-          continue;
+        if (cell.getOwner() == PlayerTag.PLAYER_2)
+          cell.setOwner(PlayerTag.PLAYER_1);
+        else if (cell.getOwner() == PlayerTag.PLAYER_4)
+          cell.setOwner(PlayerTag.PLAYER_2);
+        else if (cell.getOwner() == PlayerTag.PLAYER_6)
+          cell.setOwner(PlayerTag.PLAYER_3);
+        else
+          cell.setOwner(PlayerTag. NONE);
 
-        }
-        else {
-
-          if(lastPosition.containsKey(board[x][y].getOwner())== false) {
-            cells=cleanArray().clone();
-            lastPosition.put(board[x][y].getOwner(),cells);
-          }
-
-          cells=lastPosition.get(board[x][y].getOwner()).clone();
-          cells[cellsLength(cells)]=board[x][y];
-          lastPosition.put(board[x][y].getOwner(),cells);
-
-        }
       }
     }
-
     return new Board(board);
   }
 
   public static Board createFourPlayersBoard() {
-    int i=0;
     Cell[][] board = createBoard();
-    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
-    Cell[] cells = new Cell[10];
-    cells=cleanArray().clone();
-
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
-        if (board[x][y] == null)
+        Cell cell = board[x][y];
+        if (cell == null)
           continue;
-        if (board[x][y].getOwner() != PlayerTag.PLAYER_2
-                && board[x][y].getOwner() != PlayerTag.PLAYER_3
-                && board[x][y].getOwner() != PlayerTag.PLAYER_5
-                && board[x][y].getOwner() != PlayerTag.PLAYER_6) {
-
-                board[x][y].setOwner(PlayerTag.NONE);
-
-        } else {
-
-          if(lastPosition.containsKey(board[x][y].getOwner())== false) {
-              cells=cleanArray().clone();
-              lastPosition.put(board[x][y].getOwner(),cells);
-            }
-
-          cells=lastPosition.get(board[x][y].getOwner()).clone();
-          cells[cellsLength(cells)]=board[x][y];
-          lastPosition.put(board[x][y].getOwner(),cells);
-
-        }
+        if (cell.getOwner() == PlayerTag.PLAYER_2)
+          cell.setOwner(PlayerTag.PLAYER_1);
+        else if (cell.getOwner() == PlayerTag.PLAYER_3)
+          cell.setOwner(PlayerTag.PLAYER_2);
+        else if (cell.getOwner() == PlayerTag.PLAYER_5)
+          cell.setOwner(PlayerTag.PLAYER_3);
+        else if (cell.getOwner() == PlayerTag.PLAYER_6)
+          cell.setOwner(PlayerTag.PLAYER_4);
+        else
+          cell.setOwner(PlayerTag.NONE);
       }
     }
 
@@ -161,24 +118,11 @@ public class ChineseCheckersBoardFactory {
 
   public static Board createSixPlayersBoard() {
     Cell[][] board = createBoard();
-    Map<PlayerTag, Cell[]> lastPosition = new HashMap<>();
-    Cell[] cells = new Cell[10];
-    cells=cleanArray().clone();
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
         if (board[x][y] == null)
           continue;
-
-        if (lastPosition.containsKey(board[x][y].getOwner()) == false) {
-          cells = cleanArray().clone();
-          lastPosition.put(board[x][y].getOwner(), cells);
-        }
-
-        cells = lastPosition.get(board[x][y].getOwner()).clone();
-        cells[cellsLength(cells)] = board[x][y];
-        lastPosition.put(board[x][y].getOwner(), cells);
-
       }
     }
 

@@ -3,23 +3,27 @@ package common;
 import java.io.Serializable;
 
 public class Point implements Serializable {
-  private final double q, r, s;
+  private final int q, r, s;
 
   public Point(double q, double r) {
+    this((int)q, (int)r);
+  }
+
+  public Point(int q, int r) {
     this.q = q;
     this.r = r;
     this.s = -q-r;
   }
 
-  public double getQ() {
+  public int getQ() {
     return q;
   }
 
-  public double getR() {
+  public int getR() {
     return r;
   }
 
-  public double getS() {
+  public int getS() {
     return s;
   }
 

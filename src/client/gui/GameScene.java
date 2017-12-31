@@ -3,12 +3,13 @@ package client.gui;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.shape.Polygon;
 
 public class GameScene {
 
-  Group root;
-  Scene scene;
-  Canvas canvas;
+  private Group root;
+  private Scene scene;
+  private Canvas canvas;
 
   public GameScene(int width, int height) {
     root = new Group();
@@ -16,5 +17,17 @@ public class GameScene {
     canvas = new Canvas();
 
     root.getChildren().addAll(canvas);
+  }
+
+  public Scene getScene() {
+    return scene;
+  }
+
+  public Group getRoot() {
+    return root;
+  }
+
+  public void addChildren(Polygon polygon) {
+    getRoot().getChildren().add(polygon);
   }
 }
