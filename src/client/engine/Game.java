@@ -33,6 +33,7 @@ public class Game {
     clientThread.start();
     board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
     drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
+    drawEngine.createInformation(isOnTurn);
     move = new Move(board);
   }
 
