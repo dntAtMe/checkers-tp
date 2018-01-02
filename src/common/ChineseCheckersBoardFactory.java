@@ -66,7 +66,7 @@ public class ChineseCheckersBoardFactory {
         if (cell == null)
           continue;
         if (cell.getOwner() == PlayerTag.PLAYER_4) {
-          cell.setOwner(PlayerTag.NONE);
+          cell.setOwner(PlayerTag.PLAYER_2);
           endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
         }
         else if (cell.getOwner() == PlayerTag.PLAYER_1) {

@@ -37,14 +37,35 @@ public class Game {
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " moved"));
     }
-    advanceTurn();
+   // advanceTurn();
+  }
+
+  public void broadcastStatusMessage() {
+    for (Player player : players) {
+      player.writeGameMessage(new GameStatusMessage(player.getTag()));
+    }
+  }
+
+  public void broadcastTurnMessage(GameMessage msg) {
+    for (Player player : players) {
+      player.writeGameMessage(msg);
+      player.writeGameMessage(new GameLogMessage("current turn: " + getActivePlayer()));
+    }
+  }
+
+  public boolean canSkip(PlayerTag tag) {
+    if (isOnTurn(tag)) {
+      advanceTurn();
+      return true;
+    }
+    return false;
   }
 
   public boolean canMove(Point from, Point to, PlayerTag askingTag) {
    // if (!isOnTurn(askingTag))
     //  return false;
     if(move.canMove(from, to, askingTag)) {
-      move.makeMove(from, to);
+      move.makeMove(from, to, askingTag);
       return true;
     }
     return false;
@@ -60,22 +81,8 @@ public class Game {
     return true;
   }
 
-
-  public void broadcastStatusMessage() {
-    for (Player player : players) {
-      player.writeGameMessage(new GameStatusMessage(player.getTag()));
-    }
-  }
-
-  public void broadcastTurnMessage(GameMessage msg) {
-    for (Player player : players) {
-      player.writeGameMessage(msg);
-      player.writeGameMessage(new GameLogMessage("current turn: " + getActivePlayer()));
-    }
-  }
-
   private void advanceTurn() {
-    //currentTurn = (currentTurn % players.size()) + 1;
+    currentTurn = (currentTurn % players.size()) + 1;
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
 

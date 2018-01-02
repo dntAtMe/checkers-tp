@@ -32,4 +32,7 @@ public class InputHandler {
     game.onCellExited(ex.getX(), ex.getY());
   }
 
+  public void onMoveSkipped() {
+    game.onMoveSkipped();
+  }
 }

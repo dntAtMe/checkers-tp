@@ -88,7 +88,13 @@ public class Client implements Runnable{
     public boolean attemptMove(Point from, Point to) {
       log.info("Moving");
       sendGameMessage(new GameMovementMessage(from, to));
-      return false;
+      return true;
+    }
+
+    public boolean attemptSkip() {
+        log.info("Skipping");
+        sendGameMessage(new GameSkipMessage());
+        return true;
     }
 
     public boolean canStartNewGame(int numberOfPlayers) {
@@ -99,6 +105,17 @@ public class Client implements Runnable{
         return true;
       }
       return false;
+    }
+
+    //TODO:
+    public boolean canJoinGame(int numberOfPlayers) {
+        sendGameMessage(new GameJoinMessage(BoardType.BOARD_STAR, numberOfPlayers));
+        GameAnswerMessage msg = readNewAnswerMessage();
+        log.info(msg.getDesc() + ", " + msg.getAnswer());
+        if(msg != null && msg.getAnswer() == true) {
+            return true;
+        }
+        return false;
     }
 
     private void sendNewGameMessage(int numberOfPlayers) {
@@ -131,18 +148,6 @@ public class Client implements Runnable{
       return msg;
     }
 
-    private GameLogMessage readNewLogMessage() {
-      GameMessage msg = null;
-      try {
-        msg = (GameMessage) objectInputStream.readObject();
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-      }
-
-      return (GameLogMessage) msg;
-    }
 
     private GameAnswerMessage readNewAnswerMessage() {
       GameMessage msg = readGameMessage();
@@ -153,14 +158,7 @@ public class Client implements Runnable{
         return null;
     }
 
-    //TODO:
-    public boolean canJoinGame(int numberOfPlayers) {
-      sendGameMessage(new GameJoinMessage(BoardType.BOARD_STAR, numberOfPlayers));
-      GameAnswerMessage msg = readNewAnswerMessage();
-      log.info(msg.getDesc() + ", " + msg.getAnswer());
-      if(msg != null && msg.getAnswer() == true) {
-        return true;
-      }
-      return false;
-    }
+
+
+
 }

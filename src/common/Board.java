@@ -61,4 +61,11 @@ public class Board {
     }
     return false;
   }
+
+  public boolean isInEndingZone(Point point, PlayerTag askingTag) {
+    if (endingCells.get(askingTag).contains(point))
+      return true;
+    return false;
+  }
+
 }

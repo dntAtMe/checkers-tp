@@ -6,7 +6,6 @@ import common.*;
 import client.net.Client;
 import client.gui.DrawEngine;
 import client.gui.Window;
-import javafx.scene.shape.Polygon;
 
 public class Game {
 
@@ -27,13 +26,15 @@ public class Game {
   public Game(Window window) {
 
     drawEngine = new DrawEngine(window);
+
   }
 
   private void setUpGame(int numberOfPlayers) {
-    clientThread.start();
     board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
     drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
     drawEngine.createInformation(isOnTurn);
+    clientThread.start();
+
     move = new Move(board);
   }
 
@@ -110,6 +111,10 @@ public class Game {
     }
   }
 
+  public void onMoveSkipped() {
+     client.attemptSkip();
+  }
+
   private boolean attemptMove(Cell from, Cell to) {
     return client.attemptMove(from.getPoint(), to.getPoint());
   }
@@ -141,6 +146,8 @@ public class Game {
   }
 
   public void setOnTurn(boolean onTurn) {
+    drawEngine.updateSkipOption(onTurn);
+    drawEngine.updateTurnNotification(onTurn);
     isOnTurn = onTurn;
   }
 
@@ -151,5 +158,7 @@ public class Game {
   public void setTag(PlayerTag tag) {
     this.tag = tag;
   }
+
+
 }
 

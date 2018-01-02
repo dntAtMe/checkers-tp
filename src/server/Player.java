@@ -12,18 +12,19 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Player extends Thread {
-  private ObjectInputStream objectInputStream;
-  private ObjectOutputStream objectOutputStream;
-  private Game game;
-  private Socket socket;
-  private boolean running;
-  private PlayerTag tag;
+  private boolean             running;
+
+  private Game                game;
+  private ObjectInputStream   objectInputStream;
+  private ObjectOutputStream  objectOutputStream;
+  private Socket              socket;
+  private PlayerTag           tag;
 
   public Player(Socket socket) throws IOException {
     this.socket = socket;
     try {
       objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-      objectInputStream = new ObjectInputStream(socket.getInputStream());
+        objectInputStream = new ObjectInputStream(socket.getInputStream());
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -36,7 +37,6 @@ public class Player extends Thread {
     System.out.println("Player tag: " + tag.toString());
     writeGameMessage(new GameStatusMessage(tag));
     writeGameMessage(new GameLogMessage("All players connected!"));
-
 
     while (running) {
       GameMessage msg = readGameMessage();
@@ -65,6 +65,10 @@ public class Player extends Thread {
       case GAME_LOG_MESSAGE:
         System.out.println(((GameLogMessage) msg).getDesc());
         break;
+        case GAME_SKIP_MESSAGE:
+            System.out.println("Skipping " + tag);
+            game.canSkip(tag);
+            break;
     }
   }
 

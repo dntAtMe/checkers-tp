@@ -23,6 +23,9 @@ public class DrawEngine {
 
   private Polygon polygons[][];
 
+  private Button skipButton;
+  private Text text;
+
   private GameScene scene;
   private Window window;
 
@@ -107,21 +110,22 @@ public class DrawEngine {
   }
 
   public void createInformation(boolean isOnTurn){
-    Text text = createText(isOnTurn);
+    text = new Text(500,100, "");
+    text.setText(updateText(isOnTurn));
     text.setFont(Font.font(java.awt.Font.DIALOG, 20));
     scene.addChildren(text);
 
-    Button button = createButton();
-    scene.addChildren(button);
+    skipButton = createButton();
+    scene.addChildren(skipButton);
 
   }
 
-  private Text createText(boolean isOnTurn){
+  private String updateText(boolean isOnTurn){
 
     if(isOnTurn)
-      return new Text(500,100,"\tGo! \nIt's your turn!");
+      return new String ("\tGo! \nIt's your turn!");
 
-      return new Text(500,100,"\tSTOP! \nIt's not your turn!");
+      return new String("\tSTOP! \nIt's not your turn!");
 
   }
   private Button createButton(){
@@ -130,10 +134,18 @@ public class DrawEngine {
     button.setStyle(" -fx-background-color:#B3B3B3; ");
 
     button.setOnAction(e -> {
-      window.skipMove(window);
+      window.onMoveSkipped();
       System.out.println("Skip move");
             });
     return button;
+  }
+
+  public void updateSkipOption(boolean isOnTurn) {
+    skipButton.setDisable(!isOnTurn);
+  }
+
+  public void updateTurnNotification(boolean onTurn) {
+    text.setText(updateText(onTurn));
   }
 }
 

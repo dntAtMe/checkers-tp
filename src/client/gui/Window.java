@@ -41,8 +41,8 @@ public class Window extends Application implements IWindow {
     inputHandler.onMouseClicked(e);
   }
 
-  public void skipMove(Window window){
-
+  public void onMoveSkipped(){
+    inputHandler.onMoveSkipped();
   }
 
   @Override
