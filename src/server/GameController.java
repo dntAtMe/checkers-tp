@@ -69,7 +69,7 @@ public class GameController {
   private Game findMatchingGame(BoardType type, int playersAmount) {
     for (Game game : games) {
       log.info("Looking for a game");
-      if (game.getMaxPlayersAmount() == playersAmount && !game.isFull()) {
+      if (game.getMaxPlayersAmount() == playersAmount && !game.didStart()) {
         return game;
       }
     }

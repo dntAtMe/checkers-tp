@@ -147,5 +147,9 @@ public class DrawEngine {
   public void updateTurnNotification(boolean onTurn) {
     text.setText(updateText(onTurn));
   }
+
+  public void onGameEnded() {
+    window.setMenuUp();
+  }
 }
 

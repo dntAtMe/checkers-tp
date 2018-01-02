@@ -160,5 +160,8 @@ public class Game {
   }
 
 
+  public void onGameEnded() {
+      System.exit(1);
+  }
 }
 

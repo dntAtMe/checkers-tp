@@ -24,12 +24,13 @@ public class Client implements Runnable{
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
+    private boolean running;
+
     Game game;
 
     public Client(String serverAddress, Game game) {
       this.serverAddress = serverAddress;
       this.game = game;
-
       try {
         socket = new Socket(serverAddress, PORT);
       } catch (IOException e) {
@@ -50,13 +51,15 @@ public class Client implements Runnable{
     //TODO:
     @Override
     public void run() {
-      while(true) {
+        running = true;
+        while(running){
 //        if(game.isOnTurn())
  //         continue;
         GameMessage msg = readGameMessage();
+        if (msg == null)
+            break;
         handleGameMessage(msg);
         log.info("CLIENT: " + game.getTag() + ", Current turn: " + game.isOnTurn());
-
       }
     }
 
@@ -141,6 +144,16 @@ public class Client implements Runnable{
         msg = (GameMessage) objectInputStream.readObject();
       } catch (IOException e) {
         e.printStackTrace();
+          try {
+              objectInputStream.close();
+              objectOutputStream.close();
+              socket.close();
+              running = false;
+              game.onGameEnded();
+          } catch (IOException e1) {
+              e1.printStackTrace();
+          }
+        log.info("CLOSED???????????????");
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       }

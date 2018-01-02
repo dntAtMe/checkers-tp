@@ -21,8 +21,8 @@ public class Move {
         return false;
       if (board.isTaken(to))
         return false;
-      if (board.isInEndingZone(from, askingTag) && !board.isInEndingZone(to, askingTag))
-          return false;
+  //    if (board.isInEndingZone(from, askingTag) && !board.isInEndingZone(to, askingTag))
+   //       return false;
       if (distance(from, to) <= 2) {
         if (((distance(from, to) == 2) && isPointBetween(from, to))){
           return true;

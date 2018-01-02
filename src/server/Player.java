@@ -57,9 +57,7 @@ public class Player extends Thread {
         GameMovementMessage moveMsg = (GameMovementMessage)msg;
         if(game.canMove(moveMsg.getStart(), moveMsg.getEnd(), tag)) {
           game.broadcastMoveMessage(msg, tag);
-          if (game.didWin(tag)) {
-            System.out.println(tag + " WON ");
-          }
+          game.checkForWin(tag);
         }
         break;
       case GAME_LOG_MESSAGE:
@@ -96,4 +94,15 @@ public class Player extends Thread {
   public PlayerTag getTag() {
     return tag;
   }
+
+    public void close() {
+      running = false;
+      try {
+          objectOutputStream.close();
+          objectInputStream.close();
+          socket.close();
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+    }
 }

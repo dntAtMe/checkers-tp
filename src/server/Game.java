@@ -21,6 +21,8 @@ public class Game {
   private int currentTurn;
   private Random random;
 
+  private boolean started;
+
   public Game(int playersAmount) {
     players = new ArrayList<>();
     board = ChineseCheckersBoardFactory.createBoard(playersAmount);
@@ -37,7 +39,7 @@ public class Game {
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " moved"));
     }
-   // advanceTurn();
+    advanceTurn();
   }
 
   public void broadcastStatusMessage() {
@@ -71,18 +73,28 @@ public class Game {
     return false;
   }
 
-  public boolean didWin(PlayerTag askingTag) {
+  public boolean checkForWin(PlayerTag askingTag) {
     List<Point> points = board.endingCells.get(askingTag);
     for (Point p : points) {
       if (board.getCell(p).getOwner() != askingTag)
         return false;
     }
-
+    kickPlayer(askingTag);
+    advanceTurn();
     return true;
   }
 
+  private void kickPlayer(PlayerTag tag) {
+    System.out.println("kicking");
+    Player player = getPlayerByTag(tag);
+    if (player != null) {
+      player.close();
+      players.remove(player);
+    }
+  }
+
   private void advanceTurn() {
-    currentTurn = (currentTurn % players.size()) + 1;
+    currentTurn = (currentTurn % players.size());
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
 
@@ -91,7 +103,7 @@ public class Game {
   }
   public int getCurrentPlayersAmount() {return players.size(); }
 
-  public PlayerTag getActivePlayer() { return PlayerTag.values()[currentTurn]; }
+  public PlayerTag getActivePlayer() { return players.get(currentTurn).getTag(); }
   public boolean isOnTurn(PlayerTag playerTag) {
     return PlayerTag.values()[currentTurn] == playerTag;
   }
@@ -102,7 +114,9 @@ public class Game {
   }
 
   public void start(){
-    currentTurn = random.nextInt(playersAmount) + 1;
+    started = true;
+
+    currentTurn = random.nextInt(playersAmount);
     for (Player player : players) {
       player.setPlayerTag(PlayerTag.values()[1 + players.indexOf(player)]);
     }
@@ -113,6 +127,18 @@ public class Game {
     for (Player player : players) {
       player.start();
     }
+  }
+
+  public boolean didStart() {
+    return started;
+  }
+
+  private Player getPlayerByTag(PlayerTag tag) {
+    for (Player player : players) {
+      if (player.getTag() == tag)
+        return player;
+    }
+    return null;
   }
 
 
