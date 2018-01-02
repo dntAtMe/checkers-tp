@@ -36,13 +36,15 @@ public class Game {
     move = new Move(board);
   }
 
-  //TODO:
-  public void startNewGame(int numberOfPlayers) {
-    client = new Client("localhost", this);
+  private void setUpClient(String ipAddress) {
+    client = new Client(ipAddress, this);
     clientThread = new Thread(client);
+  }
 
+  //TODO:
+  public void startNewGame(int numberOfPlayers, String ipAddrees) {
+    setUpClient(ipAddrees);
     boolean newGame = client.canStartNewGame(numberOfPlayers);
-    //boolean newGame = true;
 
     if (newGame) {
       setUpGame(numberOfPlayers);
@@ -51,10 +53,8 @@ public class Game {
   }
 
   //TODO:
-  public void joinGame(int numberOfPlayers) {
-    client = new Client("localhost", this);
-    clientThread = new Thread(client);
-
+  public void joinGame(int numberOfPlayers, String ipAddrees) {
+    setUpClient(ipAddrees);
     boolean joinedGame = client.canJoinGame(numberOfPlayers);
 
     if(joinedGame) {
@@ -88,6 +88,7 @@ public class Game {
 
   }
 
+  //TODO: Fix change on NULL value
   public void onCellSelected(double x, double y) {
 
     if (!isOnTurn)

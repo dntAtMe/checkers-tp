@@ -55,8 +55,12 @@ public class Player extends Thread {
       case GAME_MOVEMENT_MESSAGE:
         System.out.println("Moved");
         GameMovementMessage moveMsg = (GameMovementMessage)msg;
-        if(game.canMove(moveMsg.getStart(), moveMsg.getEnd(), tag))
+        if(game.canMove(moveMsg.getStart(), moveMsg.getEnd(), tag)) {
           game.broadcastMoveMessage(msg, tag);
+          if (game.didWin(tag)) {
+            System.out.println(tag + " WON ");
+          }
+        }
         break;
       case GAME_LOG_MESSAGE:
         System.out.println(((GameLogMessage) msg).getDesc());

@@ -12,11 +12,11 @@ public class InputHandler {
   }
 
   public void onNewGameSelected(int numberOfPlayers, int amountOfBots, String ipAddress) {
-    game.startNewGame(numberOfPlayers);
+    game.startNewGame(numberOfPlayers, ipAddress);
   }
 
-  public void onJoinGameSelected(int numberOfPlayers) {
-    game.joinGame(numberOfPlayers);
+  public void onJoinGameSelected(int numberOfPlayers, String ipAddress) {
+    game.joinGame(numberOfPlayers, ipAddress);
   }
 
   public void onMouseClicked(MouseEvent e) {

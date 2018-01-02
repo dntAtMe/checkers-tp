@@ -50,6 +50,16 @@ public class Game {
     return false;
   }
 
+  public boolean didWin(PlayerTag askingTag) {
+    List<Point> points = board.endingCells.get(askingTag);
+    for (Point p : points) {
+      if (board.getCell(p).getOwner() != askingTag)
+        return false;
+    }
+
+    return true;
+  }
+
 
   public void broadcastStatusMessage() {
     for (Player player : players) {
@@ -65,7 +75,7 @@ public class Game {
   }
 
   private void advanceTurn() {
-    currentTurn = (currentTurn % players.size()) + 1;
+    //currentTurn = (currentTurn % players.size()) + 1;
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
 
