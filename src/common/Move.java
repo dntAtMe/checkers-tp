@@ -31,6 +31,7 @@ public class Move {
       return false;
     }
 
+
     /*
     private boolean canMove(Cell from, Cell to, PlayerTag askingTag) {
       if (from.getOwner() != askingTag)
