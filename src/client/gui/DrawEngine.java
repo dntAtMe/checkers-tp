@@ -3,9 +3,12 @@ package client.gui;
 import common.Cell;
 import client.PlayerTag;
 import common.Point;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +22,9 @@ public class DrawEngine {
   Map<PlayerTag, Color> playerColors = new HashMap<>();
 
   private Polygon polygons[][];
+
+  private Button skipButton;
+  private Text text;
 
   private GameScene scene;
   private Window window;
@@ -103,4 +109,47 @@ public class DrawEngine {
     return poly;
   }
 
+  public void createInformation(boolean isOnTurn){
+    text = new Text(500,100, "");
+    text.setText(updateText(isOnTurn));
+    text.setFont(Font.font(java.awt.Font.DIALOG, 20));
+    scene.addChildren(text);
+
+    skipButton = createButton();
+    scene.addChildren(skipButton);
+
+  }
+
+  private String updateText(boolean isOnTurn){
+
+    if(isOnTurn)
+      return new String ("\tGo! \nIt's your turn!");
+
+      return new String("\tSTOP! \nIt's not your turn!");
+
+  }
+  private Button createButton(){
+    Button button = new Button("SKIP");
+    button.setMinSize(50,50);
+    button.setStyle(" -fx-background-color:#B3B3B3; ");
+
+    button.setOnAction(e -> {
+      window.onMoveSkipped();
+      System.out.println("Skip move");
+            });
+    return button;
+  }
+
+  public void updateSkipOption(boolean isOnTurn) {
+    skipButton.setDisable(!isOnTurn);
+  }
+
+  public void updateTurnNotification(boolean onTurn) {
+    text.setText(updateText(onTurn));
+  }
+
+  public void onGameEnded() {
+    window.setMenuUp();
+  }
 }
+

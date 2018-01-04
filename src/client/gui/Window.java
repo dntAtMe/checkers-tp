@@ -41,6 +41,13 @@ public class Window extends Application implements IWindow {
     inputHandler.onMouseClicked(e);
   }
 
+  public void onMoveSkipped(){
+    inputHandler.onMoveSkipped();
+  }
+
+  public void setMenuUp() {
+    setScene(menuScene.getScene());
+  }
 
   @Override
   public void setScene(Scene scene) {

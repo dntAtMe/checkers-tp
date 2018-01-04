@@ -5,6 +5,7 @@ import client.PlayerTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //TODO: CLEAN UP AND SET TAGS PROPERLY
@@ -53,20 +54,30 @@ public class ChineseCheckersBoardFactory {
 
   public static Board createTwoPlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
+    endingCells.put(PlayerTag.PLAYER_2, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_1, new ArrayList<>());
+
+
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
         Cell cell = board[x][y];
         if (cell == null)
           continue;
-        if (cell.getOwner() == PlayerTag.PLAYER_4)
+        if (cell.getOwner() == PlayerTag.PLAYER_4) {
           cell.setOwner(PlayerTag.PLAYER_2);
-        else if (cell.getOwner() != PlayerTag.PLAYER_1)
+          endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
+        }
+        else if (cell.getOwner() == PlayerTag.PLAYER_1) {
+          endingCells.get(PlayerTag.PLAYER_2).add(cell.getPoint());
+        }
+        else
           cell.setOwner(PlayerTag.NONE);
 
       }
     }
-    return new Board(board);
+    return new Board(board, endingCells);
 
   }
 

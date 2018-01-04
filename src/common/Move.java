@@ -4,13 +4,14 @@ package common;
 import client.PlayerTag;
 
 public class Move {
-    Board board;
+    private Board board;
+
 
     public Move(Board board){
         this.board=board;
     }
 
-    public void makeMove(Point start, Point end) {
+    public void makeMove(Point start, Point end, PlayerTag tag) {
       board.copyOwner(end, start);
       board.setCellEmpty(start);
     }
@@ -20,6 +21,8 @@ public class Move {
         return false;
       if (board.isTaken(to))
         return false;
+  //    if (board.isInEndingZone(from, askingTag) && !board.isInEndingZone(to, askingTag))
+   //       return false;
       if (distance(from, to) <= 2) {
         if (((distance(from, to) == 2) && isPointBetween(from, to))){
           return true;
@@ -30,25 +33,6 @@ public class Move {
       }
       return false;
     }
-
-
-    /*
-    private boolean canMove(Cell from, Cell to, PlayerTag askingTag) {
-      if (from.getOwner() != askingTag)
-        return false;
-      if (board.isTaken(to.getPoint()))
-        return false;
-      if (distance(from, to) <= 2) {
-        if (((distance(from, to) == 2) && isPointBetween(from, to))){
-          return true;
-        }
-        else if(distance(from, to) == 1) {
-          return true;
-        }
-      }
-      return false;
-    }
-    */
 
     public boolean isPointBetween(Point a, Point b) {
       Point vector = Point.substract(b, a);

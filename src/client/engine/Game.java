@@ -6,7 +6,6 @@ import common.*;
 import client.net.Client;
 import client.gui.DrawEngine;
 import client.gui.Window;
-import javafx.scene.shape.Polygon;
 
 public class Game {
 
@@ -27,22 +26,27 @@ public class Game {
   public Game(Window window) {
 
     drawEngine = new DrawEngine(window);
+
   }
 
   private void setUpGame(int numberOfPlayers) {
-    clientThread.start();
     board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
     drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
+    drawEngine.createInformation(isOnTurn);
+    clientThread.start();
+
     move = new Move(board);
   }
 
-  //TODO:
-  public void startNewGame(int numberOfPlayers) {
-    client = new Client("localhost", this);
+  private void setUpClient(String ipAddress) {
+    client = new Client(ipAddress, this);
     clientThread = new Thread(client);
+  }
 
+  //TODO:
+  public void startNewGame(int numberOfPlayers, String ipAddrees) {
+    setUpClient(ipAddrees);
     boolean newGame = client.canStartNewGame(numberOfPlayers);
-    //boolean newGame = true;
 
     if (newGame) {
       setUpGame(numberOfPlayers);
@@ -51,10 +55,8 @@ public class Game {
   }
 
   //TODO:
-  public void joinGame(int numberOfPlayers) {
-    client = new Client("localhost", this);
-    clientThread = new Thread(client);
-
+  public void joinGame(int numberOfPlayers, String ipAddrees) {
+    setUpClient(ipAddrees);
     boolean joinedGame = client.canJoinGame(numberOfPlayers);
 
     if(joinedGame) {
@@ -88,6 +90,7 @@ public class Game {
 
   }
 
+  //TODO: Fix change on NULL value
   public void onCellSelected(double x, double y) {
 
     if (!isOnTurn)
@@ -106,6 +109,10 @@ public class Game {
       attemptMove(selected, change);
       selected = null;
     }
+  }
+
+  public void onMoveSkipped() {
+     client.attemptSkip();
   }
 
   private boolean attemptMove(Cell from, Cell to) {
@@ -139,6 +146,8 @@ public class Game {
   }
 
   public void setOnTurn(boolean onTurn) {
+    drawEngine.updateSkipOption(onTurn);
+    drawEngine.updateTurnNotification(onTurn);
     isOnTurn = onTurn;
   }
 
@@ -148,6 +157,11 @@ public class Game {
 
   public void setTag(PlayerTag tag) {
     this.tag = tag;
+  }
+
+
+  public void onGameEnded() {
+      System.exit(1);
   }
 }
 

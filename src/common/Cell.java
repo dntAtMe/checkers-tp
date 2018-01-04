@@ -11,10 +11,6 @@ public class Cell {
     this.owner = owner;
   }
 
-  public Cell(){
-
-  }
-
   public Point getPoint() {
     return point;
   }

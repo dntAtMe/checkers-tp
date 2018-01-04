@@ -3,6 +3,7 @@ package common;
 import client.PlayerTag;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -14,9 +15,16 @@ public class Board {
           new Point (-1, 2), new Point (-2, 1),
           new Point (-1, -1), new Point (1, -2)
   };
+  public final Map<PlayerTag, List<Point>> endingCells;
 
+  //TEMPORARY
   public Board(Cell[][] board) {
+    this(board, null);
+  }
+
+  public Board(Cell[][] board, Map<PlayerTag, List<Point>> endingCells) {
     this.board = board;
+    this.endingCells = endingCells;
   }
 
   public boolean isTaken(Point p) {
@@ -53,4 +61,11 @@ public class Board {
     }
     return false;
   }
+
+  public boolean isInEndingZone(Point point, PlayerTag askingTag) {
+    if (endingCells.get(askingTag).contains(point))
+      return true;
+    return false;
+  }
+
 }

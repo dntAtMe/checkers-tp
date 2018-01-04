@@ -66,7 +66,7 @@ public class MenuScene {
     buttonJoinGame.setOnAction(actionEvent -> {
       serverIp[0] =ip.getText();
       System.out.println("server ip : "+serverIp[0]);
-      inputHandler.onJoinGameSelected(amountOfPlayers);
+      inputHandler.onJoinGameSelected(amountOfPlayers, serverIp[0]);
     });
 
     buttonJoinGame.setMinSize(100, 100);
