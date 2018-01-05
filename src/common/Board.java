@@ -17,6 +17,9 @@ public class Board {
   };
   public final Map<PlayerTag, List<Point>> endingCells;
 
+Point point;
+
+
   //TEMPORARY
   public Board(Cell[][] board) {
     this(board, null);
@@ -66,6 +69,13 @@ public class Board {
     if (endingCells.get(askingTag).contains(point))
       return true;
     return false;
+  }
+
+  public Point getTmpPoint(){
+    return point;
+  }
+  public void setTmpPoint(Point point){
+    this.point=point;
   }
 
 }

@@ -144,7 +144,7 @@ public class Client implements Runnable{
         msg = (GameMessage) objectInputStream.readObject();
       } catch (IOException e) {
         e.printStackTrace();
-          try {
+         /* try {
               objectInputStream.close();
               objectOutputStream.close();
               socket.close();
@@ -154,6 +154,7 @@ public class Client implements Runnable{
               e1.printStackTrace();
           }
         log.info("CLOSED???????????????");
+        */
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       }
