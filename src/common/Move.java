@@ -21,10 +21,15 @@ public class Move {
         return isTurnFinished;
     }
     public boolean canMove(Point from, Point to, PlayerTag askingTag, PlayerTag lastPlayer) {
+
         isTurnFinished=false;
+
+        if(askingTag==PlayerTag.NONE)
+            return false;
 
         if (board.getCell(from).getOwner() != askingTag)
             return false;
+
 
         if (board.isTaken(to))
             return false;
@@ -40,13 +45,15 @@ public class Move {
         return false;
     }
 
-    public boolean canMoveAgain(Point from, Point to, PlayerTag askingTag) {
+    private boolean canMoveAgain(Point from, Point to, PlayerTag askingTag) {
 
         if(board.getTmpPoint()!=from)
             return false;
 
+
         if (board.getCell(from).getOwner() != askingTag)
             return false;
+
         if (board.isTaken(to))
             return false;
 
@@ -59,8 +66,7 @@ public class Move {
         return false;
     }
 
-    public boolean canMoveForFirstTimePoint(Point from, Point to, PlayerTag askingTag) {
-
+    private boolean canMoveForFirstTimePoint(Point from, Point to, PlayerTag askingTag) {
 
         if (distance(from, to) <= 2) {
             if (((distance(from, to) == 2) && isPointBetween(from, to))){
@@ -76,8 +82,6 @@ public class Move {
     }
 
     public boolean isPointBetween(Point a, Point b) {
-        System.out.println("FROM"+a.getQ()+" , "+a.getR());
-        System.out.println("TO"+b.getQ()+" , "+b.getR());
 
         Point vector = Point.substract(b, a);
         if(!board.isDiagonal(vector)) {
@@ -85,9 +89,7 @@ public class Move {
                 return true;
         }
         return false;
-
     }
-
 
     public double distance(Point a, Point b) {
         return (Math.abs(a.getQ() - b.getQ()) +
@@ -116,9 +118,6 @@ public class Move {
         else
             return b.getR();
     }
-
-
-
 }
 
 

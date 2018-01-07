@@ -65,7 +65,11 @@ public class Game {
   }
 
   public boolean canMove(Point from, Point to, PlayerTag askingTag) {
+
    if(getActivePlayer()!=askingTag)
+     return false;
+
+   if(askingTag==PlayerTag.NONE)
      return false;
 
     if (move.canMove(from, to, askingTag,getLastPlayer())) {
@@ -107,6 +111,8 @@ public class Game {
   }
 
   private void advanceTurn() {
+
+    lastPlayer=null;
     currentTurn = (currentTurn % players.size())+1;
    broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
