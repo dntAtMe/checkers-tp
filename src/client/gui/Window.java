@@ -26,7 +26,9 @@ public class Window extends Application implements IWindow {
     stage = mainStage;
     inputHandler = new InputHandler(this);
     menuScene = new MenuScene(inputHandler, 200, 800);
-    AlertBox.display();
+    AlertBox box = new AlertBox();
+    box.start(mainStage);
+   // AlertBox.display();
     stage.setScene(menuScene.getScene());
     stage.setTitle("Chinese Checkers");
     stage.show();
