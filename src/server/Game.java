@@ -29,7 +29,7 @@ public class Game {
 
   public Game(int playersAmount, int botsAmount) {
     players = new ArrayList<>();
-    board = ChineseCheckersBoardFactory.createBoard(playersAmount);
+    board = ChineseCheckersBoardFactory.getInstance().createBoard(playersAmount);
     move = new Move(board);
     this.playersAmount = playersAmount;
     this.botsAmount = botsAmount;
