@@ -20,7 +20,7 @@ public class TestBoard {
         endingCells.add(point);
         map.put(PlayerTag.PLAYER_2, endingCells);
         cells[0][0] = new Cell(0, 0, PlayerTag.PLAYER_2);
-        cells[0][1] = new Cell(0,1,PlayerTag.PLAYER_4);
+        cells[0][1] = new Cell(1,2,PlayerTag.PLAYER_4);
         return new Board(cells, map);
     }
     @Test
@@ -37,55 +37,38 @@ public class TestBoard {
         board.setCellEmpty(point);
         Assert.assertEquals(PlayerTag.NONE,board.board[point.getQ()][point.getR()].getOwner());
     }
-
+/*
     @Test
     public void testCellEmpty(){
-        board=prepareBoard();
-        Point point = new Point(0,0);
+        board.board[2][3] = new Cell(2,3,PlayerTag.PLAYER_1);
+        Point point = new Point(2,3);
         board.setCellEmpty(point);
-        Assert.assertEquals(PlayerTag.NONE, board.board[point.getQ()][point.getR()].getOwner());
+        Assert.assertEquals(PlayerTag.NONE, board.board[2][3].getOwner());
     }
-
-
+/*
     @Test
     public void testCopyOwner(){
-        board=prepareBoard();
         Point pointFrom = new Point(0,0);
-        Point pointTo = new Point(0,1);
+        Point pointTo = new Point(1,2);
+
         board.copyOwner(pointFrom,pointTo);
         Assert.assertEquals(board.board[pointFrom.getQ()][pointFrom.getR()].getOwner(),
                 board.board[pointTo.getQ()][pointTo.getR()].getOwner() );
         }
-
+/*
         @Test
         public void testGetCell(){
-            board=prepareBoard();
-            Assert.assertEquals(board.board[0][0],board.getCell(new Point(0,0)));
+            Assert.assertEquals(board.board[2][3],board.getCell(new Point(2,3)));
         }
 
         @Test
         public void testIsDiagonal(){
-            board=prepareBoard();
             Point point =  new Point(2, -1);
 
             Assert.assertTrue(board.isDiagonal(point));
         }
-
-        @Test
-        public void testGetTmpPoin(){
-            board=prepareBoard();
-            Point tmpPoint=new Point(2,3);
-            board.setTmpPoint(tmpPoint);
-            Assert.assertEquals(tmpPoint.getQ(),board.getTmpPoint().getQ());
-        }
-
-        @Test
-        public void testSetTmpPoin(){
-            board=prepareBoard();
-            board.setTmpPoint(new Point(2,3));
-            Assert.assertEquals(2,board.getTmpPoint().getQ());
     }
+    */
 
     }
-
 
