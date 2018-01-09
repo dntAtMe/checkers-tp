@@ -104,13 +104,14 @@ public class Client implements Runnable{
         return true;
     }
 
-    public boolean canStartNewGame(int numberOfPlayers) {
-      sendNewGameMessage(numberOfPlayers);
+    public boolean canStartNewGame(int numberOfPlayers, int amountOfBots) {
+      sendNewGameMessage(numberOfPlayers, amountOfBots);
       GameAnswerMessage msg = readNewAnswerMessage();
-      log.info(msg.getDesc() + ", " + msg.getAnswer());
       if(msg != null && msg.getAnswer() == true) {
+        log.info(msg.getDesc() + ", " + msg.getAnswer());
         return true;
       }
+      log.info(msg.getDesc() + ", " + msg.getAnswer());
       return false;
     }
 
@@ -125,8 +126,9 @@ public class Client implements Runnable{
         return false;
     }
 
-    private void sendNewGameMessage(int numberOfPlayers) {
-      GameSetupMessage msg = new GameSetupMessage(BoardType.BOARD_STAR, numberOfPlayers);
+    private void sendNewGameMessage(int numberOfPlayers, int amountOfBots) {
+      GameSetupMessage msg = new GameSetupMessage
+              (BoardType.BOARD_STAR, numberOfPlayers, amountOfBots);
       try {
         objectOutputStream.writeObject(msg);
       } catch (IOException e) {

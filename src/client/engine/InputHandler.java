@@ -12,7 +12,7 @@ public class InputHandler {
   }
 
   public void onNewGameSelected(int numberOfPlayers, int amountOfBots, String ipAddress) {
-    game.startNewGame(numberOfPlayers, ipAddress);
+    game.startNewGame(numberOfPlayers, amountOfBots, ipAddress);
   }
 
   public void onJoinGameSelected(int numberOfPlayers, String ipAddress) {

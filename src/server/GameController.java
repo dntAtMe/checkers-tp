@@ -43,11 +43,13 @@ public class GameController {
   //TODO:
   private void handleGameSetup(GameSetupMessage msg, Player player) {
     log.info("Game setup started");
-    Game game = new Game(msg.getPlayers());
+    Game game = new Game(msg.getPlayers(), msg.getBots());
     game.addPlayer(player);
     player.setGame(game);
     games.add(game);
     player.writeGameMessage(new GameAnswerMessage(true, "Game created!"));
+    startGameIfFull(game);
+
   }
 
   //TODO:

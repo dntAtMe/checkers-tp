@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class BotsBox {
     ChoiceBox choiceBots;
     int amountOfPlayers;
-    int amountOfBots;
+    static int amountOfBots;
 
     public BotsBox(int amountOfPlayers){
         this.amountOfPlayers=amountOfPlayers;

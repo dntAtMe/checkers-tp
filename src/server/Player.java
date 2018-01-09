@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Player extends Thread {
+public class Player extends Thread implements IPlayer{
   private boolean             running;
 
   private Game                game;
@@ -46,7 +46,7 @@ public class Player extends Thread {
   void setGame(Game game) {
     this.game = game;
   }
-  void setPlayerTag(PlayerTag tag) { this.tag = tag; }
+  public void setPlayerTag(PlayerTag tag) { this.tag = tag; }
 
   //TODO:
   private void handleGameMessage(GameMessage msg) {

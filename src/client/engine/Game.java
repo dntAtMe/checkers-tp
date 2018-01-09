@@ -29,7 +29,7 @@ public class Game {
 
   private void setUpGame(int numberOfPlayers) {
     board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
-    drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
+    drawEngine.startGameGUI(board.COLUMNS, Board.ROWS, board.board);
     drawEngine.createInformation(isOnTurn);
     clientThread.start();
     move = new Move(board);
@@ -41,9 +41,9 @@ public class Game {
   }
 
   //TODO:
-  public void startNewGame(int numberOfPlayers, String ipAddrees) {
+  public void startNewGame(int numberOfPlayers, int numberOfBots, String ipAddrees) {
     setUpClient(ipAddrees);
-    boolean newGame = client.canStartNewGame(numberOfPlayers);
+    boolean newGame = client.canStartNewGame(numberOfPlayers, numberOfBots);
 
     if (newGame) {
       setUpGame(numberOfPlayers);

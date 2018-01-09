@@ -17,8 +17,9 @@ import java.util.Random;
 public class Game {
   private Board board;
   private Move move;
-  private List<Player> players;
+  private List<IPlayer> players;
   private int playersAmount;
+  private int botsAmount;
   private int currentTurn;
   private Random random;
   private boolean started;
@@ -26,18 +27,21 @@ public class Game {
   public PlayerTag lastPlayer = null;
 
 
-  public Game(int playersAmount) {
+  public Game(int playersAmount, int botsAmount) {
     players = new ArrayList<>();
     board = ChineseCheckersBoardFactory.createBoard(playersAmount);
     move = new Move(board);
     this.playersAmount = playersAmount;
+    this.botsAmount = botsAmount;
     random = new Random();
+
+    prepareBots();
   }
 
   //TODO: another thread?
   //  TEMPORARY METHOD
   public void broadcastMoveMessage(GameMessage msg, PlayerTag tag) {
-    for (Player player : players) {
+    for (IPlayer player : players) {
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " moved"));
     }
@@ -45,13 +49,13 @@ public class Game {
   }
 
   public void broadcastStatusMessage() {
-    for (Player player : players) {
+    for (IPlayer player : players) {
       player.writeGameMessage(new GameStatusMessage(player.getTag()));
     }
   }
 
   public void broadcastTurnMessage(GameMessage msg) {
-    for (Player player : players) {
+    for (IPlayer player : players) {
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage("current turn: " + getActivePlayer()));
     }
@@ -59,7 +63,7 @@ public class Game {
 
   public void broadcastWinMessage(PlayerTag tag) {
     GameMessage msg = new GameWonMessage(tag);
-    for (Player player : players) {
+    for (IPlayer player : players) {
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " won!"));
     }
@@ -134,7 +138,7 @@ public class Game {
 
   protected void kickPlayer(PlayerTag tag) {
     System.out.println("kicking");
-    Player player = getPlayerByTag(tag);
+    IPlayer player = getPlayerByTag(tag);
     if (player != null) {
       player.close();
       players.remove(player);
@@ -167,15 +171,22 @@ public class Game {
     started = true;
 
     currentTurn = random.nextInt(playersAmount)+1;
-    for (Player player : players) {
+    for (IPlayer player : players) {
       player.setPlayerTag(PlayerTag.values()[1 + players.indexOf(player)]);
     }
     System.out.println(getActivePlayer().toString());
     broadcastStatusMessage();
     System.out.println(getActivePlayer().toString());
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
-    for (Player player : players) {
+    for (IPlayer player : players) {
       player.start();
+    }
+  }
+
+  private void prepareBots() {
+    for(int i = 0; i < botsAmount; i++) {
+      System.out.println("Got a PC homie!");
+      players.add(new ComputerPlayer());
     }
   }
 
@@ -183,8 +194,8 @@ public class Game {
     return started;
   }
 
-  private Player getPlayerByTag(PlayerTag tag) {
-    for (Player player : players) {
+  private IPlayer getPlayerByTag(PlayerTag tag) {
+    for (IPlayer player : players) {
       if (player.getTag() == tag)
         return player;
     }
