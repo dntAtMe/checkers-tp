@@ -24,9 +24,7 @@ public class Game {
 
 
   public Game(Window window) {
-
     drawEngine = new DrawEngine(window);
-
   }
 
   private void setUpGame(int numberOfPlayers) {
@@ -34,7 +32,6 @@ public class Game {
     drawEngine.startGameGUI(Board.COLUMNS, Board.ROWS, board.board);
     drawEngine.createInformation(isOnTurn);
     clientThread.start();
-
     move = new Move(board);
   }
 
@@ -112,6 +109,7 @@ public class Game {
   }
 
   public void onMoveSkipped() {
+    board.setTmpPoint(null);
      client.attemptSkip();
   }
 
@@ -119,7 +117,6 @@ public class Game {
     return client.attemptMove(from.getPoint(), to.getPoint());
   }
 
-  //TODO:
   public void move(Point start, Point end) {
     Cell from = board.board[(int) start.getQ()][(int) start.getR()];
     Cell to = board.board[(int) end.getQ()][(int) end.getR()];

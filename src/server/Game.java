@@ -20,8 +20,10 @@ public class Game {
   private int playersAmount;
   private int currentTurn;
   private Random random;
-
   private boolean started;
+
+  public PlayerTag lastPlayer = null;
+
 
   public Game(int playersAmount) {
     players = new ArrayList<>();
@@ -35,11 +37,10 @@ public class Game {
   //  TEMPORARY METHOD
   public void broadcastMoveMessage(GameMessage msg, PlayerTag tag) {
     for (Player player : players) {
-      System.out.println("Writing move@");
       player.writeGameMessage(msg);
       player.writeGameMessage(new GameLogMessage(tag + " moved"));
     }
-    advanceTurn();
+   // advanceTurn();
   }
 
   public void broadcastStatusMessage() {
@@ -64,13 +65,30 @@ public class Game {
   }
 
   public boolean canMove(Point from, Point to, PlayerTag askingTag) {
-   // if (!isOnTurn(askingTag))
-    //  return false;
-    if(move.canMove(from, to, askingTag)) {
-      move.makeMove(from, to, askingTag);
-      return true;
+
+   if(getActivePlayer()!=askingTag)
+     return false;
+
+   if(askingTag==PlayerTag.NONE)
+     return false;
+
+    if (move.canMove(from, to, askingTag,getLastPlayer())) {
+        move.makeMove(from, to, askingTag);
+        setLastPlayer(askingTag);
+        checkTurn(askingTag);
+        return true;
+      }
+      checkTurn(askingTag);
+      return false;
+  }
+
+  public void checkTurn(PlayerTag tag){
+    if(isTurnFinished()){
+      advanceTurn();
     }
-    return false;
+  }
+  public boolean isTurnFinished(){
+    return move.isTurnFinished();
   }
 
   public boolean checkForWin(PlayerTag askingTag) {
@@ -80,7 +98,6 @@ public class Game {
         return false;
     }
     kickPlayer(askingTag);
-    advanceTurn();
     return true;
   }
 
@@ -94,8 +111,9 @@ public class Game {
   }
 
   private void advanceTurn() {
-    currentTurn = (currentTurn % players.size()) + 1;
-    broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
+    lastPlayer=null;
+    currentTurn = (currentTurn % players.size())+1;
+   broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
 
   public int getMaxPlayersAmount() {
@@ -103,7 +121,9 @@ public class Game {
   }
   public int getCurrentPlayersAmount() {return players.size(); }
 
-  public PlayerTag getActivePlayer() { return players.get(currentTurn).getTag(); }
+  public PlayerTag getActivePlayer() {
+    return PlayerTag.values()[currentTurn];}
+  public PlayerTag getLastPlayer() { return lastPlayer;}
   public boolean isOnTurn(PlayerTag playerTag) {
     return PlayerTag.values()[currentTurn] == playerTag;
   }
@@ -116,7 +136,7 @@ public class Game {
   public void start(){
     started = true;
 
-    currentTurn = random.nextInt(playersAmount);
+    currentTurn = random.nextInt(playersAmount)+1;
     for (Player player : players) {
       player.setPlayerTag(PlayerTag.values()[1 + players.indexOf(player)]);
     }
@@ -141,5 +161,8 @@ public class Game {
     return null;
   }
 
+  public void setLastPlayer(PlayerTag lastPlayer){
+    this.lastPlayer=lastPlayer;
+  }
 
 }

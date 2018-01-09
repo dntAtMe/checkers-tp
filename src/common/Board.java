@@ -54,4 +54,11 @@ public class Board {
   }
 
 
+  public Point getTmpPoint(){
+    return point;
+  }
+  public void setTmpPoint(Point point){
+    this.point=point;
+  }
+
 }
