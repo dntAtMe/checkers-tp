@@ -84,6 +84,10 @@ public class Client implements Runnable{
           else
             game.setOnTurn(false);
           break;
+        case GAME_WON_MESSAGE:
+          GameWonMessage wonMsg = (GameWonMessage) msg;
+          game.onPlayerWon(wonMsg.getTag());
+          break;
       }
     }
 
@@ -134,6 +138,7 @@ public class Client implements Runnable{
       try {
         objectOutputStream.writeObject(msg);
       } catch (IOException e) {
+        disconnect();
         e.printStackTrace();
       }
     }
@@ -143,25 +148,14 @@ public class Client implements Runnable{
       try {
         msg = (GameMessage) objectInputStream.readObject();
       } catch (IOException e) {
+        disconnect();
         e.printStackTrace();
-         /* try {
-              objectInputStream.close();
-              objectOutputStream.close();
-              socket.close();
-              running = false;
-              game.onGameEnded();
-          } catch (IOException e1) {
-              e1.printStackTrace();
-          }
-        log.info("CLOSED???????????????");
-        */
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
       }
 
       return msg;
     }
-
 
     private GameAnswerMessage readNewAnswerMessage() {
       GameMessage msg = readGameMessage();
@@ -170,6 +164,17 @@ public class Client implements Runnable{
         return (GameAnswerMessage) msg;
       else
         return null;
+    }
+
+    public void disconnect() {
+      try {
+        running = false;
+        objectOutputStream.close();
+        objectInputStream.close();
+        socket.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
 
 

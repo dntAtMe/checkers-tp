@@ -1,7 +1,6 @@
 package common;
 
 import client.FileManager;
-import client.PlayerTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;

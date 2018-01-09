@@ -25,7 +25,6 @@ public class BotsBox {
         this.amountOfPlayers=amountOfPlayers;
     }
     public  int display() {
-        int numberOfBoot=0;
         Stage window = new Stage();
 
       //  window.initModality(Modality.APPLICATION_MODAL);

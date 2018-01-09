@@ -1,10 +1,9 @@
 package server;
 
-import client.PlayerTag;
+import common.PlayerTag;
 import server.messages.GameLogMessage;
 import server.messages.GameMovementMessage;
 import server.messages.GameStatusMessage;
-import server.messages.GameTurnMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -76,6 +75,7 @@ public class Player extends Thread {
       msg = (GameMessage) objectInputStream.readObject();
     } catch (IOException e) {
       e.printStackTrace();
+      kickPlayer();
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }
@@ -88,6 +88,7 @@ public class Player extends Thread {
       objectOutputStream.writeObject(msg);
     } catch (IOException e) {
       e.printStackTrace();
+      kickPlayer();
     }
   }
 
@@ -103,6 +104,18 @@ public class Player extends Thread {
           socket.close();
       } catch (IOException e) {
           e.printStackTrace();
+      }
+    }
+
+    private void kickPlayer() {
+      try {
+        objectOutputStream.close();
+        objectInputStream.close();
+        socket.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      } finally {
+        game.onLostConnection(this);
       }
     }
 }

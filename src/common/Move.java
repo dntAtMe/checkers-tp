@@ -1,8 +1,6 @@
 package common;
 
 
-import client.PlayerTag;
-
 public class Move {
     private Board board;
     boolean isTurnFinished=false;

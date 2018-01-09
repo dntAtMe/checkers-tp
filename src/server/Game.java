@@ -3,11 +3,12 @@ package server;
 import common.Move;
 import common.Board;
 import common.ChineseCheckersBoardFactory;
-import client.PlayerTag;
+import common.PlayerTag;
 import common.Point;
 import server.messages.GameLogMessage;
 import server.messages.GameStatusMessage;
 import server.messages.GameTurnMessage;
+import server.messages.GameWonMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,14 @@ public class Game {
     }
   }
 
+  public void broadcastWinMessage(PlayerTag tag) {
+    GameMessage msg = new GameWonMessage(tag);
+    for (Player player : players) {
+      player.writeGameMessage(msg);
+      player.writeGameMessage(new GameLogMessage(tag + " won!"));
+    }
+  }
+
   public boolean canSkip(PlayerTag tag) {
     if (isOnTurn(tag)) {
       advanceTurn();
@@ -91,17 +100,39 @@ public class Game {
     return move.isTurnFinished();
   }
 
-  public boolean checkForWin(PlayerTag askingTag) {
+  public void checkForWin(PlayerTag askingTag) {
+    if (didWin(askingTag)) {
+      broadcastWinMessage(askingTag);
+      if (players.size() < 2) {
+        endGame();
+      }
+    }
+  }
+
+  private boolean didWin (PlayerTag askingTag) {
     List<Point> points = board.endingCells.get(askingTag);
     for (Point p : points) {
       if (board.getCell(p).getOwner() != askingTag)
         return false;
     }
-    kickPlayer(askingTag);
     return true;
   }
 
-  private void kickPlayer(PlayerTag tag) {
+  public void onLostConnection(Player p) {
+    kickPlayer(p.getTag());
+    if (players.size() < 2) {
+      broadcastWinMessage(p.getTag());
+      endGame();
+    } else {
+      advanceTurn();
+    }
+  }
+
+  private void endGame() {
+    GameController.getInstance().endGame(this);
+  }
+
+  protected void kickPlayer(PlayerTag tag) {
     System.out.println("kicking");
     Player player = getPlayerByTag(tag);
     if (player != null) {
@@ -119,7 +150,6 @@ public class Game {
   public int getMaxPlayersAmount() {
     return playersAmount;
   }
-  public int getCurrentPlayersAmount() {return players.size(); }
 
   public PlayerTag getActivePlayer() {
     return PlayerTag.values()[currentTurn];}
@@ -164,5 +194,4 @@ public class Game {
   public void setLastPlayer(PlayerTag lastPlayer){
     this.lastPlayer=lastPlayer;
   }
-
 }

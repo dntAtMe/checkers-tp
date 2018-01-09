@@ -13,12 +13,19 @@ import java.util.logging.Logger;
 public class GameController {
   private static final Logger log = Logger.getLogger( GameController.class.getName());
 
-  List<Game> games;
+  private List<Game> games;
 
-  public GameController() {
+  private static GameController instance;
+
+  private GameController() {
     games = new ArrayList<>();
   }
 
+  public static GameController getInstance() {
+    if (instance == null)
+      instance = new GameController();
+    return instance;
+  }
 
   public void handlePlayerConnecting(Player player) {
     GameMessage msg = player.readGameMessage();
@@ -76,4 +83,7 @@ public class GameController {
     return null;
   }
 
+  public void endGame(Game game) {
+    games.remove(game);
+  }
 }

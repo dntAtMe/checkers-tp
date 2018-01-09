@@ -1,6 +1,6 @@
 package server.messages;
 
-import client.PlayerTag;
+import common.PlayerTag;
 import server.GameMessage;
 import server.GameMessageType;
 

@@ -1,15 +1,15 @@
 package server.messages;
 
-import common.PlayerTag;
 import server.GameMessage;
 import server.GameMessageType;
+import common.PlayerTag;
 
-public class GameStatusMessage extends GameMessage{
+public class GameWonMessage extends GameMessage{
 
   private PlayerTag tag;
 
-  public GameStatusMessage(PlayerTag tag) {
-    super(GameMessageType.GAME_STATUS_MESSAGE);
+  public GameWonMessage(PlayerTag tag) {
+    super(GameMessageType.GAME_WON_MESSAGE);
     this.tag = tag;
   }
 

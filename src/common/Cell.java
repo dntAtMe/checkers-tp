@@ -1,7 +1,5 @@
 package common;
 
-import client.PlayerTag;
-
 public class Cell {
   private Point point;
   private PlayerTag owner;

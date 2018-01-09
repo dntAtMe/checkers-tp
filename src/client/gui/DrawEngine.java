@@ -1,7 +1,7 @@
 package client.gui;
 
 import common.Cell;
-import client.PlayerTag;
+import common.PlayerTag;
 import common.Point;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -150,6 +150,17 @@ public class DrawEngine {
 
   public void onGameEnded() {
     window.setMenuUp();
+  }
+
+
+  public Point pixelToPoint(double x, double y) {
+    x = (x - DrawEngine.WIDTH / 2) / DrawEngine.WIDTH;
+
+    double t1 = y / DrawEngine.SIZE, t2 = Math.floor(x + t1);
+    int r = (int) Math.floor((Math.floor(t1 - x) + t2) / 3);
+    int q = (int) Math.floor((Math.floor(2 * x + 1) + t2) / 3) - r + 6;
+
+    return new Point(q, r);
   }
 }
 

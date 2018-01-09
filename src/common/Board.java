@@ -1,8 +1,5 @@
 package common;
 
-import client.PlayerTag;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +13,7 @@ public class Board {
           new Point (-1, -1), new Point (1, -2)
   };
   public final Map<PlayerTag, List<Point>> endingCells;
+  private Point point;
 
   public Board(Cell[][] board, Map<PlayerTag, List<Point>> endingCells) {
     this.board = board;
