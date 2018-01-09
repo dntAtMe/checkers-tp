@@ -10,8 +10,19 @@ import java.util.Map;
 //TODO: CLEAN UP AND SET TAGS PROPERLY
 public class ChineseCheckersBoardFactory {
 
+  private static ChineseCheckersBoardFactory instance = null;
 
-  public static Board createBoard(int numberOfPlayers) {
+  private ChineseCheckersBoardFactory() {
+
+  }
+
+  public static ChineseCheckersBoardFactory getInstance() {
+    if (instance == null)
+      instance = new ChineseCheckersBoardFactory();
+    return instance;
+  }
+
+  public Board createBoard(int numberOfPlayers) {
     switch (numberOfPlayers) {
       case 2:
         return createTwoPlayersBoard();
@@ -25,12 +36,12 @@ public class ChineseCheckersBoardFactory {
     return null;
   }
 
-  private static Cell[][] createBoard() {
+  private Cell[][] createBoard() {
     char currentChar;
     PlayerTag owner;
     Cell[][] board = new Cell[Board.COLUMNS][Board.ROWS];
 
-    ArrayList<String> output = FileManager.readFile("src/board.txt");
+    ArrayList<String> output = FileManager.getInstance().readFile("src/board.txt");
     String[] lines = output.toArray(new String[0]);
 
     for (int y = 0; y < Board.ROWS; y++) {
@@ -51,7 +62,7 @@ public class ChineseCheckersBoardFactory {
     return board;
   }
 
-  private static Board createTwoPlayersBoard() {
+  private Board createTwoPlayersBoard() {
     Cell[][] board = createBoard();
     Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
     endingCells.put(PlayerTag.PLAYER_2, new ArrayList<>());
@@ -80,7 +91,7 @@ public class ChineseCheckersBoardFactory {
 
   }
 
-  private static Board createThreePlayersBoard() {
+  private Board createThreePlayersBoard() {
     Cell[][] board = createBoard();
     Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
     endingCells.put(PlayerTag.PLAYER_3, new ArrayList<>());
@@ -121,7 +132,7 @@ public class ChineseCheckersBoardFactory {
     return new Board(board, endingCells);
   }
 
-  private static Board createFourPlayersBoard() {
+  private Board createFourPlayersBoard() {
     Cell[][] board = createBoard();
     Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
     endingCells.put(PlayerTag.PLAYER_4, new ArrayList<>());
@@ -161,7 +172,7 @@ public class ChineseCheckersBoardFactory {
     return new Board(board, endingCells);
   }
 
-  private static Board createSixPlayersBoard() {
+  private Board createSixPlayersBoard() {
     Cell[][] board = createBoard();
     Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
     endingCells.put(PlayerTag.PLAYER_6, new ArrayList<>());

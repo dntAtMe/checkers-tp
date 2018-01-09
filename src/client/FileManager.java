@@ -1,11 +1,18 @@
 package client;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
 public class FileManager {
 
-    public static ArrayList<String> readFile(String fileName) {
+    private static FileManager instance = null;
+
+    private FileManager() {
+
+    }
+
+    public ArrayList<String> readFile(String fileName) {
         ArrayList<String> lines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -19,4 +26,10 @@ public class FileManager {
 
         return lines;
     }
+
+  public static FileManager getInstance() {
+    if (instance == null)
+      instance = new FileManager();
+      return instance;
+  }
 }

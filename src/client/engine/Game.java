@@ -26,7 +26,7 @@ public class Game {
   }
 
   private void setUpGame(int numberOfPlayers) {
-    board = ChineseCheckersBoardFactory.createBoard(numberOfPlayers);
+    board = ChineseCheckersBoardFactory.getInstance().createBoard(numberOfPlayers);
     drawEngine.startGameGUI(board.COLUMNS, Board.ROWS, board.board);
     drawEngine.createInformation(isOnTurn);
     clientThread.start();
