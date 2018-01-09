@@ -3,9 +3,15 @@ package server;
 import common.PlayerTag;
 
 public class ComputerPlayer implements IPlayer{
+  private Game game;
+  private PlayerTag tag;
+
+  public ComputerPlayer(Game game) {
+    this.game = game;
+  }
   @Override
   public GameMessage readGameMessage() {
-    return null;
+      return null;
   }
 
   @Override
@@ -30,6 +36,7 @@ public class ComputerPlayer implements IPlayer{
 
   @Override
   public PlayerTag getTag() {
-    return null;
+    return tag;
   }
+
 }

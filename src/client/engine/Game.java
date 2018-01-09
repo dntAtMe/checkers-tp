@@ -9,22 +9,19 @@ import client.gui.Window;
 
 public class Game {
 
-  private DrawEngine drawEngine;
-  private Client client;
-  private Board board;
-  private Cell selected = null;
-  private Cell change = null;
+  private DrawEngine    drawEngine;
+  private Client        client;
+  private Board         board;
+  private Cell          selected;
 
-  private Move move;
+  private boolean       isOnTurn = false;
+  private PlayerTag     tag;
 
-  boolean isOnTurn = false;
-  PlayerTag tag;
-
-  Thread clientThread;
+  private Thread        clientThread;
 
 
   public Game(Window window) {
-    drawEngine = new DrawEngine(window);
+    drawEngine = new DrawEngine(window); window.terminateOnClose(client);
   }
 
   private void setUpGame(int numberOfPlayers) {
@@ -32,7 +29,6 @@ public class Game {
     drawEngine.startGameGUI(board.COLUMNS, Board.ROWS, board.board);
     drawEngine.createInformation(isOnTurn);
     clientThread.start();
-    move = new Move(board);
   }
 
   private void setUpClient(String ipAddress) {
@@ -97,12 +93,12 @@ public class Game {
      int r = (int)p.getR();
 
     if (selected == null) {
-      if (board.board[q][r] != null) {
+      if (board.isOnBoard(p)) {
         selected = board.board[q][r];
         //drawEngine.selectCell(q, r);
       }
     } else {
-      change = board.board[q][r];
+      Cell change = board.board[q][r];
       attemptMove(selected, change);
       selected = null;
     }

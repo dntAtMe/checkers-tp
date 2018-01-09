@@ -17,8 +17,7 @@ public class MenuScene {
   private Button buttonNewGame;
   private Button buttonJoinGame;
   private ChoiceBox choicePlayers;
-  private ChoiceBox choiceBoot;
-  private InputHandler inputHandler;
+
   BotsBox box;
   int amountOfPlayers = 2;
   int amountOfBots = 0;

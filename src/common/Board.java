@@ -59,4 +59,9 @@ public class Board {
     this.point=point;
   }
 
+  public boolean isOnBoard(Point p) {
+    if (p.getQ() > COLUMNS || p.getR() > ROWS)
+            return false;
+    return true;
+  }
 }

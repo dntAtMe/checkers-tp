@@ -125,10 +125,11 @@ public class Game {
   public void onLostConnection(Player p) {
     kickPlayer(p.getTag());
     if (players.size() < 2) {
-      broadcastWinMessage(p.getTag());
+      broadcastWinMessage(players.get(0).getTag());
       endGame();
     } else {
-      advanceTurn();
+      if(isOnTurn(p.getTag()))
+        advanceTurn();
     }
   }
 
@@ -140,7 +141,6 @@ public class Game {
     System.out.println("kicking");
     IPlayer player = getPlayerByTag(tag);
     if (player != null) {
-      player.close();
       players.remove(player);
     }
   }
@@ -186,7 +186,7 @@ public class Game {
   private void prepareBots() {
     for(int i = 0; i < botsAmount; i++) {
       System.out.println("Got a PC homie!");
-      players.add(new ComputerPlayer());
+      players.add(new ComputerPlayer(this));
     }
   }
 

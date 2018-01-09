@@ -1,6 +1,8 @@
 package client.gui;
 
+import client.net.Client;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -9,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import client.engine.InputHandler;
+import javafx.stage.WindowEvent;
 
 public class Window extends Application implements IWindow {
 
@@ -47,6 +50,15 @@ public class Window extends Application implements IWindow {
 
   public void setMenuUp() {
     setScene(menuScene.getScene());
+  }
+
+  public void terminateOnClose(Object object) {
+    if (object instanceof Client)
+      stage.setOnCloseRequest(windowEvent -> {
+        ((Client) object).disconnect();
+        Platform.exit();
+      });
+
   }
 
   @Override

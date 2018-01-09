@@ -95,24 +95,24 @@ public class ChineseCheckersBoardFactory {
           continue;
         switch (cell.getOwner()) {
           case PLAYER_1:
-            endingCells.get(PlayerTag.PLAYER_2).add(cell.getPoint());
             cell.setOwner(PlayerTag.NONE);
             break;
           case PLAYER_2:
+            endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
             cell.setOwner(PlayerTag.PLAYER_1);
             break;
           case PLAYER_3:
-            endingCells.get(PlayerTag.PLAYER_3).add(cell.getPoint());
             cell.setOwner(PlayerTag.NONE);
             break;
           case PLAYER_4:
+            endingCells.get(PlayerTag.PLAYER_2).add(cell.getPoint());
             cell.setOwner(PlayerTag.PLAYER_2);
             break;
           case PLAYER_5:
-            endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
             cell.setOwner(PlayerTag.NONE);
             break;
           case PLAYER_6:
+            endingCells.get(PlayerTag.PLAYER_3).add(cell.getPoint());
             cell.setOwner(PlayerTag.PLAYER_3);
             break;
         }
