@@ -79,10 +79,8 @@ public class Client implements Runnable{
         case GAME_TURN_MESSAGE:
           GameTurnMessage turnMsg = (GameTurnMessage) msg;
           log.info("Got turn message: " + turnMsg.getOnTurn().toString());
-          if (turnMsg.getOnTurn() == game.getTag())
-            game.setOnTurn(true);
-          else
-            game.setOnTurn(false);
+          game.setCurrentTurn(turnMsg.getOnTurn());
+
           break;
         case GAME_WON_MESSAGE:
           GameWonMessage wonMsg = (GameWonMessage) msg;

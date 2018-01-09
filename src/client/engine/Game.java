@@ -18,6 +18,7 @@ public class Game {
   private PlayerTag     tag;
 
   private Thread        clientThread;
+  private PlayerTag     currentTurn;
 
 
   public Game(Window window) {
@@ -151,6 +152,11 @@ public class Game {
      client.disconnect();
      onGameEnded();
     }
+  }
+
+  public void setCurrentTurn(PlayerTag currentTurn) {
+    this.currentTurn = currentTurn;
+    this.setOnTurn(getTag() == currentTurn);
   }
 }
 
