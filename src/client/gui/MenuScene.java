@@ -94,7 +94,7 @@ public class MenuScene {
     border.setMargin(numbersOfPlayer, new Insets(50,20,12,50));
     border.setMargin(startingGame, new Insets(10,40,40,40));
     border.setMargin(serverInformation, new Insets(40,40,40,50));
-        scene = new Scene(border, 400, 400);
+    scene = new Scene(border, 400, 400);
 
     }
 
