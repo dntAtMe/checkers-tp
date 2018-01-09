@@ -1,5 +1,6 @@
 package client.gui;
 
+import common.Board;
 import common.Cell;
 import common.PlayerTag;
 import common.Point;
@@ -42,12 +43,14 @@ public class DrawEngine {
             setFill(playerColors.get(PlayerTag.NONE));
     polygons[to.getQ()][to.getR()].
             setFill(playerColors.get(newTag));
+
   }
 
   public void selectCell(int x, int y) {
     polygons[x][y].setStroke(Color.RED);
-    polygons[x][y].setStrokeWidth(4);
+    polygons[x][y].setStrokeWidth(3);
   }
+
 
   public void deselectCell(int x, int y) {
     polygons[x][y].setStroke(Color.BLACK);
@@ -162,5 +165,22 @@ public class DrawEngine {
 
     return new Point(q, r);
   }
+
+  public void highlightPawns(PlayerTag currentTurn, Board board) {
+
+    for (int x = 0; x <Board.COLUMNS; x++){
+      for (int y = 0; y < Board.ROWS; y++) {
+        if(board.board[x][y] == null)
+          continue;
+        if (board.board[x][y].getOwner()==currentTurn) {
+          selectCell(x,y);
+        }
+        else{
+          deselectCell(x,y);
+        }
+      }
+    }
+  }
+
 }
 

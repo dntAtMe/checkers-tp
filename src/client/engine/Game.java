@@ -121,6 +121,7 @@ public class Game {
     to.setOwner(from.getOwner());
     from.setOwner(PlayerTag.NONE);
     drawEngine.onMove(from.getPoint(), to.getPoint(), to.getOwner());
+    drawEngine.highlightPawns(currentTurn,board);
     selected = null;
   }
 
@@ -157,6 +158,7 @@ public class Game {
   public void setCurrentTurn(PlayerTag currentTurn) {
     this.currentTurn = currentTurn;
     this.setOnTurn(getTag() == currentTurn);
+    drawEngine.highlightPawns(currentTurn,board);
   }
 }
 
