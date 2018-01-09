@@ -63,10 +63,10 @@ public class Player extends Thread {
       case GAME_LOG_MESSAGE:
         System.out.println(((GameLogMessage) msg).getDesc());
         break;
-        case GAME_SKIP_MESSAGE:
-            System.out.println("Skipping " + tag);
-            game.canSkip(tag);
-            break;
+      case GAME_SKIP_MESSAGE:
+        System.out.println("Skipping " + tag);
+        game.canSkip(tag);
+        break;
     }
   }
 

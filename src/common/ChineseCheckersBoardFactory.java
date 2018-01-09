@@ -52,7 +52,7 @@ public class ChineseCheckersBoardFactory {
     return board;
   }
 
-  public static Board createTwoPlayersBoard() {
+  private static Board createTwoPlayersBoard() {
     Cell[][] board = createBoard();
     Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
     endingCells.put(PlayerTag.PLAYER_2, new ArrayList<>());
@@ -81,80 +81,130 @@ public class ChineseCheckersBoardFactory {
 
   }
 
-  public static Board createThreePlayersBoard() {
+  private static Board createThreePlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
+    endingCells.put(PlayerTag.PLAYER_3, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_2, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_1, new ArrayList<>());
+
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
         Cell cell = board[x][y];
         if (cell == null)
           continue;
-        if (cell.getOwner() == PlayerTag.PLAYER_2)
-          cell.setOwner(PlayerTag.PLAYER_1);
-        else if (cell.getOwner() == PlayerTag.PLAYER_4)
-          cell.setOwner(PlayerTag.PLAYER_2);
-        else if (cell.getOwner() == PlayerTag.PLAYER_6)
-          cell.setOwner(PlayerTag.PLAYER_3);
-        else
-          cell.setOwner(PlayerTag. NONE);
-
+        switch (cell.getOwner()) {
+          case PLAYER_1:
+            endingCells.get(PlayerTag.PLAYER_2).add(cell.getPoint());
+            cell.setOwner(PlayerTag.NONE);
+            break;
+          case PLAYER_2:
+            cell.setOwner(PlayerTag.PLAYER_1);
+            break;
+          case PLAYER_3:
+            endingCells.get(PlayerTag.PLAYER_3).add(cell.getPoint());
+            cell.setOwner(PlayerTag.NONE);
+            break;
+          case PLAYER_4:
+            cell.setOwner(PlayerTag.PLAYER_2);
+            break;
+          case PLAYER_5:
+            endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
+            cell.setOwner(PlayerTag.NONE);
+            break;
+          case PLAYER_6:
+            cell.setOwner(PlayerTag.PLAYER_3);
+            break;
+        }
       }
     }
-    return new Board(board);
+    return new Board(board, endingCells);
   }
 
-  public static Board createFourPlayersBoard() {
+  private static Board createFourPlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
+    endingCells.put(PlayerTag.PLAYER_4, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_3, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_2, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_1, new ArrayList<>());
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
         Cell cell = board[x][y];
         if (cell == null)
           continue;
-        if (cell.getOwner() == PlayerTag.PLAYER_2)
-          cell.setOwner(PlayerTag.PLAYER_1);
-        else if (cell.getOwner() == PlayerTag.PLAYER_3)
-          cell.setOwner(PlayerTag.PLAYER_2);
-        else if (cell.getOwner() == PlayerTag.PLAYER_5)
-          cell.setOwner(PlayerTag.PLAYER_3);
-        else if (cell.getOwner() == PlayerTag.PLAYER_6)
-          cell.setOwner(PlayerTag.PLAYER_4);
-        else
-          cell.setOwner(PlayerTag.NONE);
+        switch (cell.getOwner()) {
+          case PLAYER_2:
+            endingCells.get(PlayerTag.PLAYER_3).add(cell.getPoint());
+            cell.setOwner(PlayerTag.PLAYER_1);
+            break;
+          case PLAYER_3:
+            endingCells.get(PlayerTag.PLAYER_4).add(cell.getPoint());
+            cell.setOwner(PlayerTag.PLAYER_2);
+            break;
+          case PLAYER_5:
+            endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
+            cell.setOwner(PlayerTag.PLAYER_3);
+            break;
+          case PLAYER_6:
+            endingCells.get(PlayerTag.PLAYER_2).add(cell.getPoint());
+            cell.setOwner(PlayerTag.PLAYER_4);
+            break;
+          default:
+            cell.setOwner(PlayerTag.NONE);
+            break;
+        }
       }
     }
 
-    return new Board(board);
+    return new Board(board, endingCells);
   }
 
-  public static Board createSixPlayersBoard() {
+  private static Board createSixPlayersBoard() {
     Cell[][] board = createBoard();
+    Map<PlayerTag, List<Point>> endingCells = new HashMap<>();
+    endingCells.put(PlayerTag.PLAYER_6, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_5, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_4, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_3, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_2, new ArrayList<>());
+    endingCells.put(PlayerTag.PLAYER_1, new ArrayList<>());
 
     for (int y = 0; y < Board.ROWS; y++) {
       for (int x = 0; x < Board.COLUMNS; x++) {
-        if (board[x][y] == null)
+        Cell cell = board[x][y];
+        if (cell == null)
           continue;
+        switch (cell.getOwner()) {
+          case PLAYER_1:
+            endingCells.get(PlayerTag.PLAYER_4).add(cell.getPoint());
+            break;
+          case PLAYER_2:
+            endingCells.get(PlayerTag.PLAYER_5).add(cell.getPoint());
+            break;
+          case PLAYER_3:
+            endingCells.get(PlayerTag.PLAYER_6).add(cell.getPoint());
+            break;
+          case PLAYER_4:
+            endingCells.get(PlayerTag.PLAYER_1).add(cell.getPoint());
+            break;
+          case PLAYER_5:
+            endingCells.get(PlayerTag.PLAYER_2).add(cell.getPoint());
+            break;
+          case PLAYER_6:
+            endingCells.get(PlayerTag.PLAYER_3).add(cell.getPoint());
+            break;
+          default:
+
+            break;
+        }
       }
     }
 
-      return new Board(board);
+      return new Board(board, endingCells);
   }
 
-  public static int cellsLength(Cell[] cell){
-    int length=0;
-    for(int i=0;i<10;i++){
-      if(cell[i]!=null)
-        length++;
-    }
-    return length;
-  }
-
-  public static Cell[] cleanArray(){
-    Cell[] c = new Cell[10];
-    for (int i=0;i<10;i++){
-      c[i]=null;
-    }
-    return c;
-  }
 }
 

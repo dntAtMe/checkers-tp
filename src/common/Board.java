@@ -17,11 +17,6 @@ public class Board {
   };
   public final Map<PlayerTag, List<Point>> endingCells;
 
-  //TEMPORARY
-  public Board(Cell[][] board) {
-    this(board, null);
-  }
-
   public Board(Cell[][] board, Map<PlayerTag, List<Point>> endingCells) {
     this.board = board;
     this.endingCells = endingCells;
@@ -36,10 +31,6 @@ public class Board {
     if (cell == null || cell.getOwner() == PlayerTag.NONE)
       return false;
     return true;
-  }
-
-  public void setCell(Point p, PlayerTag tag) {
-    getCell(p).setOwner(tag);
   }
 
   public void setCellEmpty(Point p) {
@@ -62,10 +53,5 @@ public class Board {
     return false;
   }
 
-  public boolean isInEndingZone(Point point, PlayerTag askingTag) {
-    if (endingCells.get(askingTag).contains(point))
-      return true;
-    return false;
-  }
 
 }

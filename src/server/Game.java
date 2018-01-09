@@ -94,7 +94,7 @@ public class Game {
   }
 
   private void advanceTurn() {
-    currentTurn = (currentTurn % players.size());
+    currentTurn = (currentTurn % players.size()) + 1;
     broadcastTurnMessage(new GameTurnMessage(getActivePlayer()));
   }
 
